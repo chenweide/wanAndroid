@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FFFFFF</color>
+    <color name="colorPrimaryDark">#F5F5F5</color>
+    <color name="colorAccent">#000000</color>
+    <color name="statusBar">#D8D8D8</color>
+    <color name="menuItemDefault">#7D7D7D</color>
+    <color name="menuItemChecked">#000000</color>
+
+    <color name="theme">#F9E77F</color>
+    <color name="themeTint">#fff5bb</color>
+    <color name="white">#FFFFFF</color>
+    <color name="transparent">#00000000</color>
+    <color name="black">#ff000000</color>
+
+
+    <color name="textColor">#2D2D2D</color>
+    <color name="textColorTint">#7D7D7D</color>
+    <color name="attrTagColor">#353535</color>
+    <color name="largeTextColorTint">#353535</color>
+    <color name="priceColor">#F27769</color>
+    <color name="greenTint">#9CDEC4</color>
+    <color name="line">#DCDCDC</color>
+    <color name="lineTint">#EEEEEE</color>
+    <color name="lineDeep">#000000</color>
+    <color name="gray">#BABABA</color>
+    <color name="grayBg">#F7F7F7</color>
+    <color name="grayBtn">#F1F1F1</color>
+    <color name="bubbleBg">#FF8375</color>
+
+    <color name="imgBgGray">#F0F1F3</color>
+    <color name="imgBgTintBlue">#DDEBF2</color>
+    <color name="searchBarBg">#FAFAFA</color>
+    <color name="invalidTagBg">#B2B2B2</color>
+
+
+    <!--按钮背景和字体颜色-->
+    <color name="btnBgColor">#F9E77F</color>
+    <color name="btnBgTintColor">#F1F1F1</color>
+    <color name="btnTextColor">#000000</color>
+    <color name="btnTextColorTint">#7D7D7D</color>
+</resources>

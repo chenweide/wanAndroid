@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:paddingTop="10dp"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    style="@style/Rect">
+    <TextView
+        android:id="@+id/tv_author"
+        style="@style/text_small_tint_style"
+        android:text="author"/>
+    <TextView
+        android:id="@+id/tv_date"
+        style="@style/text_small_tint_style"
+        android:text="2019"
+        android:layout_alignParentRight="true"/>
+    <TextView
+        android:id="@+id/tv_title"
+        style="@style/text_large_style"
+        android:text="title"
+        android:layout_below="@id/tv_author"
+        android:layout_marginTop="10dp"/>
+    <TextView
+        android:id="@+id/tv_category"
+        style="@style/text_normal_style"
+        android:text="category"
+        android:layout_below="@id/tv_title"
+        android:layout_marginTop="10dp"/>
+    <View
+        style="@style/line_style"
+        android:layout_below="@id/tv_category"
+        android:layout_marginTop="10dp"/>
+
+</RelativeLayout>
