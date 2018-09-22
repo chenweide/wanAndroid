@@ -1,11 +1,12 @@
 package com.cwd.wandroid.presenter;
 
 import com.cwd.wandroid.base.BasePresenter;
-import com.cwd.wandroid.contract.ArticleContract;
-import com.cwd.wandroid.entity.Article;
+import com.cwd.wandroid.contract.ProjectContract;
 import com.cwd.wandroid.entity.BaseResponse;
+import com.cwd.wandroid.entity.ProjectCategory;
 import com.cwd.wandroid.source.DataManager;
-import com.cwd.wandroid.utils.LogUtils;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
@@ -13,30 +14,33 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class ArticlePresenter extends BasePresenter<ArticleContract.View> implements ArticleContract.Presenter {
+public class ProjectPresenter extends BasePresenter<ProjectContract.View> implements ProjectContract.Presenter {
 
     private Disposable disposable;
     private DataManager dataManager;
 
-    public ArticlePresenter(DataManager dataManager){
+    public ProjectPresenter(DataManager dataManager){
         this.dataManager = dataManager;
     }
 
     @Override
-    public void getArticleList(int page) {
-        Observable<BaseResponse<Article>> observable = dataManager.getArticleList(page);
+    public void getProjectCategory() {
+        Observable<BaseResponse<List<ProjectCategory>>> observable = dataManager.getProjectCategory();
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<BaseResponse<Article>>() {
+                .subscribe(new Observer<BaseResponse<List<ProjectCategory>>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         disposable = d;
                     }
 
                     @Override
-                    public void onNext(BaseResponse<Article> articleBaseResponse) {
-                        LogUtils.d("wade",articleBaseResponse.getErrorCode()+"");
-                        getView().showArticleList(articleBaseResponse.getData().getDatas(),articleBaseResponse.getData().isOver());
+                    public void onNext(BaseResponse<List<ProjectCategory>> categoryResp) {
+                        if(categoryResp.getErrorCode() == 0){
+                            getView().showProjectCategory(categoryResp.getData());
+                        }else{
+                            getView().showError(categoryResp.getErrorMsg());
+                        }
                     }
 
                     @Override

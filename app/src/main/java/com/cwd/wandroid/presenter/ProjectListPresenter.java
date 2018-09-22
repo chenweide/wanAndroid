@@ -1,7 +1,7 @@
 package com.cwd.wandroid.presenter;
 
 import com.cwd.wandroid.base.BasePresenter;
-import com.cwd.wandroid.contract.ArticleContract;
+import com.cwd.wandroid.contract.ProjectListContract;
 import com.cwd.wandroid.entity.Article;
 import com.cwd.wandroid.entity.BaseResponse;
 import com.cwd.wandroid.source.DataManager;
@@ -13,18 +13,18 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class ArticlePresenter extends BasePresenter<ArticleContract.View> implements ArticleContract.Presenter {
+public class ProjectListPresenter extends BasePresenter<ProjectListContract.View> implements ProjectListContract.Presenter {
 
     private Disposable disposable;
     private DataManager dataManager;
 
-    public ArticlePresenter(DataManager dataManager){
+    public ProjectListPresenter(DataManager dataManager){
         this.dataManager = dataManager;
     }
 
     @Override
-    public void getArticleList(int page) {
-        Observable<BaseResponse<Article>> observable = dataManager.getArticleList(page);
+    public void getProjectList(int page,int cid) {
+        Observable<BaseResponse<Article>> observable = dataManager.getProjectList(page,cid);
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<BaseResponse<Article>>() {
@@ -35,8 +35,11 @@ public class ArticlePresenter extends BasePresenter<ArticleContract.View> implem
 
                     @Override
                     public void onNext(BaseResponse<Article> articleBaseResponse) {
-                        LogUtils.d("wade",articleBaseResponse.getErrorCode()+"");
-                        getView().showArticleList(articleBaseResponse.getData().getDatas(),articleBaseResponse.getData().isOver());
+                        if(articleBaseResponse.getErrorCode() == 0){
+                            getView().showProjectList(articleBaseResponse.getData().getDatas(),articleBaseResponse.getData().isOver());
+                        }else{
+                            getView().showError(articleBaseResponse.getErrorMsg());
+                        }
                     }
 
                     @Override
@@ -58,4 +61,5 @@ public class ArticlePresenter extends BasePresenter<ArticleContract.View> implem
             disposable.dispose();
         }
     }
+
 }

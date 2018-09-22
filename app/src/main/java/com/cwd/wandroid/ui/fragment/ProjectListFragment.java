@@ -14,8 +14,12 @@ import com.cwd.wandroid.api.ApiService;
 import com.cwd.wandroid.api.RetrofitUtils;
 import com.cwd.wandroid.base.BaseFragment;
 import com.cwd.wandroid.contract.ArticleContract;
+import com.cwd.wandroid.contract.ProjectContract;
+import com.cwd.wandroid.contract.ProjectListContract;
 import com.cwd.wandroid.entity.ArticleInfo;
+import com.cwd.wandroid.entity.ProjectCategory;
 import com.cwd.wandroid.presenter.ArticlePresenter;
+import com.cwd.wandroid.presenter.ProjectListPresenter;
 import com.cwd.wandroid.source.DataManager;
 import com.cwd.wandroid.ui.activity.WebViewActivity;
 
@@ -24,36 +28,33 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class ArticleFragment extends BaseFragment implements ArticleContract.View, SwipeRefreshLayout.OnRefreshListener {
+public class ProjectListFragment extends BaseFragment implements ProjectListContract.View, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.rv_article)
     RecyclerView rvArticle;
     @BindView(R.id.refreshLayout)
     SwipeRefreshLayout refreshLayout;
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String CID = "cid";
 
-    private String mParam1;
-    private String mParam2;
+    private int cid;
     private int page = 0;
     private boolean isRefresh;
 
-    private ArticlePresenter articlePresenter;
+    private ProjectListPresenter projectListPresenter;
     private DataManager dataManager;
     private ArticleAdapter articleAdapter;
     private List<ArticleInfo> articleInfoList = new ArrayList<>();
 
-    public ArticleFragment() {
+    public ProjectListFragment() {
 
     }
 
-    public static ArticleFragment newInstance() {
-        ArticleFragment fragment = new ArticleFragment();
-//        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
+    public static ProjectListFragment newInstance(int cid) {
+        ProjectListFragment fragment = new ProjectListFragment();
+        Bundle args = new Bundle();
+        args.putInt(CID, cid);
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -61,8 +62,7 @@ public class ArticleFragment extends BaseFragment implements ArticleContract.Vie
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            cid = getArguments().getInt(CID);
         }
     }
 
@@ -79,8 +79,8 @@ public class ArticleFragment extends BaseFragment implements ArticleContract.Vie
     @Override
     public void createPresenter() {
         dataManager = new DataManager(RetrofitUtils.get().retrofit().create(ApiService.class));
-        articlePresenter = new ArticlePresenter(dataManager);
-        articlePresenter.attachView(this);
+        projectListPresenter = new ProjectListPresenter(dataManager);
+        projectListPresenter.attachView(this);
     }
 
     @Override
@@ -104,33 +104,17 @@ public class ArticleFragment extends BaseFragment implements ArticleContract.Vie
             public void onLoadMoreRequested() {
                 isRefresh = false;
                 page++;
-                articlePresenter.getArticleList(page);
+                projectListPresenter.getProjectList(page,cid);
             }
         },rvArticle);
         rvArticle.setAdapter(articleAdapter);
         refreshLayout.setRefreshing(true);
-        articlePresenter.getArticleList(page);
+        projectListPresenter.getProjectList(page,cid);
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-    }
-
-    @Override
-    public void showArticleList(List<ArticleInfo> list,boolean isEnd) {
-        refreshLayout.setRefreshing(false);
-        if(isRefresh){
-            articleInfoList.clear();
-        }else{
-            if(isEnd){
-                articleAdapter.loadMoreEnd();
-            }else{
-                articleAdapter.loadMoreComplete();
-            }
-        }
-        articleInfoList.addAll(list);
-        articleAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -144,8 +128,22 @@ public class ArticleFragment extends BaseFragment implements ArticleContract.Vie
         refreshLayout.setRefreshing(true);
         page = 0;
         isRefresh = true;
-        articlePresenter.getArticleList(page);
+        projectListPresenter.getProjectList(page,cid);
     }
 
-
+    @Override
+    public void showProjectList(List<ArticleInfo> projectList, boolean isEnd) {
+        refreshLayout.setRefreshing(false);
+        if(isRefresh){
+            articleInfoList.clear();
+        }else{
+            if(isEnd){
+                articleAdapter.loadMoreEnd();
+            }else{
+                articleAdapter.loadMoreComplete();
+            }
+        }
+        articleInfoList.addAll(projectList);
+        articleAdapter.notifyDataSetChanged();
+    }
 }

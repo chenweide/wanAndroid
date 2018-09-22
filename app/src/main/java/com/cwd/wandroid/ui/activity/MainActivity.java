@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import com.cwd.wandroid.R;
 import com.cwd.wandroid.base.BaseActivity;
 import com.cwd.wandroid.ui.fragment.ArticleFragment;
+import com.cwd.wandroid.ui.fragment.ProjectFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +35,8 @@ public class MainActivity extends BaseActivity {
                     showFragment(0);
                     return true;
                 case R.id.navigation_dashboard:
-
+                    addFragment(fragmentList.get(1));
+                    showFragment(1);
                     return true;
                 case R.id.navigation_notifications:
 
@@ -79,6 +81,7 @@ public class MainActivity extends BaseActivity {
 
     private void initFragments(){
         fragmentList.add(ArticleFragment.newInstance());
+        fragmentList.add(ProjectFragment.newInstance());
     }
 
     private void addFragment(Fragment fragment){
