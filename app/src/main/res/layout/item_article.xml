@@ -2,30 +2,38 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="wrap_content"
     android:paddingTop="10dp"
-    android:paddingLeft="8dp"
-    android:paddingRight="8dp"
+    android:paddingLeft="12dp"
+    android:paddingRight="12dp"
     style="@style/Rect">
-    <TextView
-        android:id="@+id/tv_author"
-        style="@style/text_small_tint_style"
-        android:text="author"/>
+
     <TextView
         android:id="@+id/tv_date"
         style="@style/text_small_tint_style"
         android:text="2019"
-        android:layout_alignParentRight="true"/>
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="8dp"/>
+    <TextView
+        android:id="@+id/tv_author"
+        style="@style/text_small_tint_style"
+        android:text="author"
+        android:textStyle="bold"
+        android:layout_toLeftOf="@id/tv_date"/>
+
     <TextView
         android:id="@+id/tv_title"
         style="@style/text_large_style"
         android:text="title"
-        android:layout_below="@id/tv_author"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="12dp"
+        android:layout_below="@id/tv_date"/>
+
     <TextView
         android:id="@+id/tv_category"
         style="@style/text_normal_style"
         android:text="category"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         android:layout_below="@id/tv_title"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="12dp"/>
     <View
         style="@style/line_style"
         android:layout_below="@id/tv_category"

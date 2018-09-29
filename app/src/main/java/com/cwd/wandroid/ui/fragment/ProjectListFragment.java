@@ -36,10 +36,12 @@ public class ProjectListFragment extends BaseFragment implements ProjectListCont
     SwipeRefreshLayout refreshLayout;
 
     private static final String CID = "cid";
+    private static final String IS_SYSTEM = "isSystem";
 
     private int cid;
     private int page = 0;
     private boolean isRefresh;
+    private boolean isSystem;
 
     private ProjectListPresenter projectListPresenter;
     private DataManager dataManager;
@@ -50,10 +52,17 @@ public class ProjectListFragment extends BaseFragment implements ProjectListCont
 
     }
 
-    public static ProjectListFragment newInstance(int cid) {
+    /**
+     *
+     * @param cid
+     * @param isSystem 是否是体系下文章
+     * @return
+     */
+    public static ProjectListFragment newInstance(int cid,boolean isSystem) {
         ProjectListFragment fragment = new ProjectListFragment();
         Bundle args = new Bundle();
         args.putInt(CID, cid);
+        args.putBoolean(IS_SYSTEM,isSystem);
         fragment.setArguments(args);
         return fragment;
     }
@@ -63,6 +72,7 @@ public class ProjectListFragment extends BaseFragment implements ProjectListCont
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             cid = getArguments().getInt(CID);
+            isSystem = getArguments().getBoolean(IS_SYSTEM);
         }
     }
 
@@ -104,12 +114,12 @@ public class ProjectListFragment extends BaseFragment implements ProjectListCont
             public void onLoadMoreRequested() {
                 isRefresh = false;
                 page++;
-                projectListPresenter.getProjectList(page,cid);
+                projectListPresenter.getProjectList(page,cid,isSystem);
             }
         },rvArticle);
         rvArticle.setAdapter(articleAdapter);
         refreshLayout.setRefreshing(true);
-        projectListPresenter.getProjectList(page,cid);
+        projectListPresenter.getProjectList(page,cid,isSystem);
     }
 
     @Override
@@ -128,7 +138,7 @@ public class ProjectListFragment extends BaseFragment implements ProjectListCont
         refreshLayout.setRefreshing(true);
         page = 0;
         isRefresh = true;
-        projectListPresenter.getProjectList(page,cid);
+        projectListPresenter.getProjectList(page,cid,isSystem);
     }
 
     @Override

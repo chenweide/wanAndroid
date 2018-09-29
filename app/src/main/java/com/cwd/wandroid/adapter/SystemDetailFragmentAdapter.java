@@ -6,32 +6,33 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.cwd.wandroid.entity.ProjectCategory;
+import com.cwd.wandroid.entity.SystemDetail;
 import com.cwd.wandroid.ui.fragment.ProjectListFragment;
 
 import java.util.List;
 
-public class ProjectFragmentAdapter extends FragmentStatePagerAdapter {
+public class SystemDetailFragmentAdapter extends FragmentStatePagerAdapter {
 
-    private List<ProjectCategory> categoryList;
+    private List<SystemDetail> systemDetailList;
 
-    public ProjectFragmentAdapter(FragmentManager fm, List<ProjectCategory> categoryList) {
+    public SystemDetailFragmentAdapter(FragmentManager fm, List<SystemDetail> systemDetailList) {
         super(fm);
-        this.categoryList = categoryList;
+        this.systemDetailList = systemDetailList;
     }
 
     @Override
     public Fragment getItem(int position) {
-        return ProjectListFragment.newInstance(categoryList.get(position).getId(),false);
+        return ProjectListFragment.newInstance(systemDetailList.get(position).getId(),true);
     }
 
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return categoryList.get(position).getName();
+        return systemDetailList.get(position).getName();
     }
 
     @Override
     public int getCount() {
-        return categoryList.size();
+        return systemDetailList.size();
     }
 }

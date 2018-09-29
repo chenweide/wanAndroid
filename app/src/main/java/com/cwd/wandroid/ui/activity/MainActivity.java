@@ -12,7 +12,10 @@ import android.view.MenuItem;
 import com.cwd.wandroid.R;
 import com.cwd.wandroid.base.BaseActivity;
 import com.cwd.wandroid.ui.fragment.ArticleFragment;
+import com.cwd.wandroid.ui.fragment.NavFragment;
 import com.cwd.wandroid.ui.fragment.ProjectFragment;
+import com.cwd.wandroid.ui.fragment.SystemFragment;
+import com.cwd.wandroid.utils.BottomNavigationViewHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,15 +34,24 @@ public class MainActivity extends BaseActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
+                    toolbar.setTitle("Google Android");
                     addFragment(fragmentList.get(0));
                     showFragment(0);
                     return true;
-                case R.id.navigation_dashboard:
+                case R.id.navigation_project:
+                    toolbar.setTitle("项目");
                     addFragment(fragmentList.get(1));
                     showFragment(1);
                     return true;
-                case R.id.navigation_notifications:
-
+                case R.id.navigation_system:
+                    toolbar.setTitle("体系");
+                    addFragment(fragmentList.get(2));
+                    showFragment(2);
+                    return true;
+                case R.id.navigation_nav:
+                    toolbar.setTitle("导航");
+                    addFragment(fragmentList.get(3));
+                    showFragment(3);
                     return true;
                 default:
                     return false;
@@ -69,6 +81,7 @@ public class MainActivity extends BaseActivity {
     public void init() {
         setSupportActionBar(toolbar);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationViewHelper.disableShiftMode(navigation);
         ColorStateList colorStateList = getResources().getColorStateList(R.color.navigation_menu_item_color);
         navigation.setItemTextColor(colorStateList);
         navigation.setItemIconTintList(colorStateList);
@@ -82,6 +95,8 @@ public class MainActivity extends BaseActivity {
     private void initFragments(){
         fragmentList.add(ArticleFragment.newInstance());
         fragmentList.add(ProjectFragment.newInstance());
+        fragmentList.add(SystemFragment.newInstance());
+        fragmentList.add(NavFragment.newInstance());
     }
 
     private void addFragment(Fragment fragment){

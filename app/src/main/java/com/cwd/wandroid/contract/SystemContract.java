@@ -1,18 +1,18 @@
 package com.cwd.wandroid.contract;
 
 import com.cwd.wandroid.base.BaseContract;
-import com.cwd.wandroid.entity.ArticleInfo;
 import com.cwd.wandroid.entity.ProjectCategory;
+import com.cwd.wandroid.entity.System;
 
 import java.util.List;
 
-public interface ProjectListContract {
+public interface SystemContract {
 
     interface View extends BaseContract.View{
-        void showProjectList(List<ArticleInfo> projectList,boolean isEnd);
+        void showSystemList(List<System> systemList);
     }
 
     interface Presenter extends BaseContract.Presenter<View>{
-        void getProjectList(int page,int cid,boolean isSystem);
+        void getSystemList();
     }
 }

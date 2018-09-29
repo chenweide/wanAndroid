@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/collect"
+        android:title="@string/collect" />
+
+    <item
+        android:id="@+id/open_by_browser"
+        android:title="@string/open_by_browser" />
+
+    <item
+        android:id="@+id/refresh"
+        android:title="@string/refresh" />
+
+</menu>

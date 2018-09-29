@@ -22,6 +22,7 @@ import com.cwd.wandroid.contract.ArticleContract;
 import com.cwd.wandroid.contract.ProjectContract;
 import com.cwd.wandroid.entity.ArticleInfo;
 import com.cwd.wandroid.entity.ProjectCategory;
+import com.cwd.wandroid.entity.System;
 import com.cwd.wandroid.presenter.ArticlePresenter;
 import com.cwd.wandroid.presenter.ProjectPresenter;
 import com.cwd.wandroid.source.DataManager;
@@ -48,8 +49,7 @@ public class ProjectFragment extends BaseFragment implements ProjectContract.Vie
     }
 
     public static ProjectFragment newInstance() {
-        ProjectFragment fragment = new ProjectFragment();
-        return fragment;
+        return new ProjectFragment();
     }
 
     @Override
@@ -118,7 +118,9 @@ public class ProjectFragment extends BaseFragment implements ProjectContract.Vie
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        tabLayout.removeOnTabSelectedListener(tabListener);
+        if(tabLayout != null){
+            tabLayout.removeOnTabSelectedListener(tabListener);
+        }
     }
 
     @Override

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_checked="true"
+        android:drawable="@drawable/home"/> <!-- selected颜色 -->
+    <item android:state_pressed="true"
+        android:drawable="@drawable/home"/> <!-- pressed颜色 -->
+    <item android:state_focused="true"
+        android:drawable="@drawable/home"/> <!-- focused颜色 -->
+    <item android:drawable="@drawable/home_tint"/> <!-- default颜色 -->
+
+</selector>

@@ -25,7 +25,7 @@
     <color name="lineDeep">#000000</color>
     <color name="gray">#BABABA</color>
     <color name="grayBg">#F7F7F7</color>
-    <color name="grayBtn">#F1F1F1</color>
+    <color name="grayBtn">#ECECEC</color>
     <color name="bubbleBg">#FF8375</color>
 
     <color name="imgBgGray">#F0F1F3</color>

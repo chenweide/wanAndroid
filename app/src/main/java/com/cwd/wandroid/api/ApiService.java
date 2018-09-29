@@ -3,7 +3,9 @@ package com.cwd.wandroid.api;
 import com.cwd.wandroid.entity.Article;
 import com.cwd.wandroid.entity.BaseResponse;
 import com.cwd.wandroid.entity.Login;
+import com.cwd.wandroid.entity.NavTitle;
 import com.cwd.wandroid.entity.ProjectCategory;
+import com.cwd.wandroid.entity.System;
 
 import java.util.List;
 import java.util.Map;
@@ -47,4 +49,26 @@ public interface ApiService {
      */
     @GET("/project/list/{page}/json")
     Observable<BaseResponse<Article>> getProjectList(@Path("page") int page,@Query("cid") int cid);
+
+    /**
+     * 体系数据
+     * @return
+     */
+    @GET("/tree/json")
+    Observable<BaseResponse<List<System>>> getSystemInfo();
+
+    /**
+     * 获取体系下的文章
+     * @param page
+     * @return
+     */
+    @GET("/article/list/{page}/json")
+    Observable<BaseResponse<Article>> getSystemArticleList(@Path("page") int page,@Query("cid") int cid);
+
+    /**
+     * 导航数据
+     * @return
+     */
+    @GET("/navi/json")
+    Observable<BaseResponse<List<NavTitle>>> getNavInfo();
 }
