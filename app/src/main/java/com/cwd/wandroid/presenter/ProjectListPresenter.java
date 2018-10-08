@@ -42,7 +42,7 @@ public class ProjectListPresenter extends BasePresenter<ProjectListContract.View
                     @Override
                     public void onNext(BaseResponse<Article> articleBaseResponse) {
                         if(articleBaseResponse.getErrorCode() == 0){
-                            getView().showProjectList(articleBaseResponse.getData().getDatas(),articleBaseResponse.getData().isOver());
+                             getView().showProjectList(articleBaseResponse.getData().getDatas(),articleBaseResponse.getData().isOver());
                         }else{
                             getView().showError(articleBaseResponse.getErrorMsg());
                         }

@@ -3,6 +3,7 @@ package com.cwd.wandroid.source;
 
 import com.cwd.wandroid.api.ApiService;
 import com.cwd.wandroid.entity.Article;
+import com.cwd.wandroid.entity.Banner;
 import com.cwd.wandroid.entity.BaseResponse;
 import com.cwd.wandroid.entity.NavTitle;
 import com.cwd.wandroid.entity.ProjectCategory;
@@ -42,5 +43,13 @@ public class DataManager {
 
     public Observable<BaseResponse<List<NavTitle>>> getNavInfo(){
         return apiService.getNavInfo();
+    }
+
+    public Observable<BaseResponse<Article>> getSearchList(int page,String keyword){
+        return apiService.getSearchList(page,keyword);
+    }
+
+    public Observable<BaseResponse<List<Banner>>> getBanner(){
+        return apiService.getBanner();
     }
 }

@@ -1,5 +1,6 @@
 package com.cwd.wandroid.ui.activity;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -7,6 +8,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.cwd.wandroid.R;
@@ -16,6 +18,7 @@ import com.cwd.wandroid.ui.fragment.NavFragment;
 import com.cwd.wandroid.ui.fragment.ProjectFragment;
 import com.cwd.wandroid.ui.fragment.SystemFragment;
 import com.cwd.wandroid.utils.BottomNavigationViewHelper;
+import com.cwd.wandroid.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,6 +116,25 @@ public class MainActivity extends BaseActivity {
                 fm.beginTransaction().hide(fragmentList.get(i)).commit();
             }
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.search:
+                Intent intent = new Intent(mContext,SearchActivity.class);
+                mContext.startActivity(intent);
+                break;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

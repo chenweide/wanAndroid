@@ -17,7 +17,7 @@
         android:title="@string/title_system" />
     <item
         android:id="@+id/navigation_nav"
-        android:icon="@drawable/nav_system"
+        android:icon="@drawable/nav_nav"
         android:title="@string/title_nav" />
 
 </menu>

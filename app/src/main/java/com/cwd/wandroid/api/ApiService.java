@@ -1,6 +1,7 @@
 package com.cwd.wandroid.api;
 
 import com.cwd.wandroid.entity.Article;
+import com.cwd.wandroid.entity.Banner;
 import com.cwd.wandroid.entity.BaseResponse;
 import com.cwd.wandroid.entity.Login;
 import com.cwd.wandroid.entity.NavTitle;
@@ -60,6 +61,7 @@ public interface ApiService {
     /**
      * 获取体系下的文章
      * @param page
+     * @param cid
      * @return
      */
     @GET("/article/list/{page}/json")
@@ -71,4 +73,20 @@ public interface ApiService {
      */
     @GET("/navi/json")
     Observable<BaseResponse<List<NavTitle>>> getNavInfo();
+
+    /**
+     * 搜索
+     * @param page
+     * @param keyword
+     * @return
+     */
+    @POST("/article/query/{page}/json")
+    Observable<BaseResponse<Article>> getSearchList(@Path("page") int page,@Query("k") String keyword);
+
+    /**
+     * banner
+     * @return
+     */
+    @GET("/banner/json")
+    Observable<BaseResponse<List<Banner>>> getBanner();
 }

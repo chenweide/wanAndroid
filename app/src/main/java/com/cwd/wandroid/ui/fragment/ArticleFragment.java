@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -15,12 +16,17 @@ import com.cwd.wandroid.api.RetrofitUtils;
 import com.cwd.wandroid.base.BaseFragment;
 import com.cwd.wandroid.contract.ArticleContract;
 import com.cwd.wandroid.entity.ArticleInfo;
+import com.cwd.wandroid.entity.Banner;
 import com.cwd.wandroid.presenter.ArticlePresenter;
 import com.cwd.wandroid.source.DataManager;
 import com.cwd.wandroid.ui.activity.WebViewActivity;
+import com.cwd.wandroid.utils.GlideImageLoader;
+import com.cwd.wandroid.utils.ToastUtils;
+import com.youth.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.prefs.Preferences;
 
 import butterknife.BindView;
 
@@ -30,6 +36,9 @@ public class ArticleFragment extends BaseFragment implements ArticleContract.Vie
     RecyclerView rvArticle;
     @BindView(R.id.refreshLayout)
     SwipeRefreshLayout refreshLayout;
+
+    private com.youth.banner.Banner bannerView;
+    private View bannerLayout;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -110,6 +119,9 @@ public class ArticleFragment extends BaseFragment implements ArticleContract.Vie
         rvArticle.setAdapter(articleAdapter);
         refreshLayout.setRefreshing(true);
         articlePresenter.getArticleList(page);
+        articlePresenter.getBanner();
+        bannerLayout = LayoutInflater.from(context).inflate(R.layout.banner_layout,null);
+        bannerView = bannerLayout.findViewById(R.id.banner);
     }
 
     @Override
@@ -134,6 +146,42 @@ public class ArticleFragment extends BaseFragment implements ArticleContract.Vie
     }
 
     @Override
+    public void showNoSearchResultView() {
+
+    }
+
+    @Override
+    public void showBanner(List<Banner> banners) {
+        ToastUtils.showShort(banners.size()+"");
+        if(banners.isEmpty()){
+            return;
+        }
+        List<String> images = new ArrayList<>();
+        final List<String> titles = new ArrayList<>();
+        final List<String> urls = new ArrayList<>();
+        for(Banner banner : banners){
+            images.add(banner.getImagePath());
+            titles.add(banner.getTitle());
+            urls.add(banner.getUrl());
+        }
+
+        bannerView.isAutoPlay(true);
+        bannerView.setImages(images);
+        bannerView.setBannerTitles(titles);
+        bannerView.setImageLoader(new GlideImageLoader());
+        bannerView.setOnBannerListener(new OnBannerListener() {
+            @Override
+            public void OnBannerClick(int position) {
+                String link = urls.get(position);
+                String title = titles.get(position);
+                WebViewActivity.startAction(context,title,link);
+            }
+        });
+        bannerView.start();
+        articleAdapter.addHeaderView(bannerLayout);
+    }
+
+    @Override
     public void showError(String message) {
         super.showError(message);
         refreshLayout.setRefreshing(false);
@@ -147,5 +195,15 @@ public class ArticleFragment extends BaseFragment implements ArticleContract.Vie
         articlePresenter.getArticleList(page);
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        bannerView.startAutoPlay();
+    }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        bannerView.stopAutoPlay();
+    }
 }

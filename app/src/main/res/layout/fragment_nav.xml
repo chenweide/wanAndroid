@@ -13,15 +13,10 @@
         android:layout_height="match_parent"
         android:background="@color/grayBg"/>
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="none">
+
         <com.cwd.wandroid.ui.widget.FlowLayout
             android:id="@+id/fl_nav"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"/>
-    </ScrollView>
+            android:layout_height="match_parent"/>
 
 </LinearLayout>

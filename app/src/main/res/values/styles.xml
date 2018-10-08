@@ -130,4 +130,9 @@
     <style name="Rect"/>
     <style name="Border"/>
 
+    <style name="SearchToolbarStyle" parent="Base.Widget.AppCompat.Toolbar">
+        <item name="contentInsetStart">0dp</item>
+        <item name="contentInsetStartWithNavigation">0dp</item>
+    </style>
+
 </resources>

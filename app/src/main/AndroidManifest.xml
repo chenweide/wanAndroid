@@ -25,7 +25,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activity.WebViewActivity" />
-        <activity android:name=".ui.activity.SystemDetailActivity"></activity>
+        <activity android:name=".ui.activity.SystemDetailActivity" />
+        <activity android:name=".ui.activity.SearchActivity"/>
     </application>
 
 </manifest>

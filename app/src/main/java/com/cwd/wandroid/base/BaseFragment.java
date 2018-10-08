@@ -16,7 +16,7 @@ import butterknife.Unbinder;
 
 public abstract class BaseFragment extends Fragment implements BaseContract.View {
 
-    protected Context context;
+    public Context context;
     private Unbinder unbinder;
 
     @Override
