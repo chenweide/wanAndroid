@@ -49,4 +49,6 @@ dependencies {
     implementation 'cn.pedant.sweetalert:library:1.3'
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
     implementation 'com.jaeger.statusbarutil:library:1.4.0'
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
+    implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
 }

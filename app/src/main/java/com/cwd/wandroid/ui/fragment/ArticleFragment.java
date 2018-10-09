@@ -152,7 +152,6 @@ public class ArticleFragment extends BaseFragment implements ArticleContract.Vie
 
     @Override
     public void showBanner(List<Banner> banners) {
-        ToastUtils.showShort(banners.size()+"");
         if(banners.isEmpty()){
             return;
         }

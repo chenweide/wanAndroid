@@ -19,5 +19,9 @@
         android:id="@+id/navigation_nav"
         android:icon="@drawable/nav_nav"
         android:title="@string/title_nav" />
+    <item
+        android:id="@+id/navigation_mine"
+        android:icon="@drawable/nav_mine"
+        android:title="@string/title_mine" />
 
 </menu>

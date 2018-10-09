@@ -89,4 +89,33 @@ public interface ApiService {
      */
     @GET("/banner/json")
     Observable<BaseResponse<List<Banner>>> getBanner();
+
+    /**
+     *登录
+     * @return
+     */
+    @POST("/user/login")
+    Observable<BaseResponse<Login>> login(@Query("username") String username,@Query("password") String password);
+
+    /**
+     *注销
+     * @return
+     */
+    @GET("/user/logout/json")
+    Observable<BaseResponse> logout();
+
+    /**
+     *注册
+     * @return
+     */
+    @POST("/user/register")
+    Observable<BaseResponse<Login>> register(@Query("username") String username,@Query("password") String password,@Query("repassword") String repassword);
+
+    /**
+     * 获取收藏文章列表
+     * @param page
+     * @return
+     */
+    @GET("/lg/collect/list/{page}/json")
+    Observable<BaseResponse<Article>> getCollectList(@Path("page") int page);
 }

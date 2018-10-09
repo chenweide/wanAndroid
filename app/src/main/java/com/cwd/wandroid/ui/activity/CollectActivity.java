@@ -1,11 +1,7 @@
 package com.cwd.wandroid.ui.activity;
 
-import android.animation.Animator;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -14,7 +10,6 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewAnimationUtils;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -28,15 +23,13 @@ import com.cwd.wandroid.entity.ArticleInfo;
 import com.cwd.wandroid.entity.Banner;
 import com.cwd.wandroid.presenter.ArticlePresenter;
 import com.cwd.wandroid.source.DataManager;
-import com.cwd.wandroid.ui.fragment.ArticleFragment;
-import com.cwd.wandroid.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 
-public class SearchActivity extends BaseActivity implements ArticleContract.View, SwipeRefreshLayout.OnRefreshListener {
+public class CollectActivity extends BaseActivity implements ArticleContract.View, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.tool_bar)
     Toolbar toolbar;

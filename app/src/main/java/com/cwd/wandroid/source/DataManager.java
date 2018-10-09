@@ -5,6 +5,7 @@ import com.cwd.wandroid.api.ApiService;
 import com.cwd.wandroid.entity.Article;
 import com.cwd.wandroid.entity.Banner;
 import com.cwd.wandroid.entity.BaseResponse;
+import com.cwd.wandroid.entity.Login;
 import com.cwd.wandroid.entity.NavTitle;
 import com.cwd.wandroid.entity.ProjectCategory;
 import com.cwd.wandroid.entity.System;
@@ -51,5 +52,21 @@ public class DataManager {
 
     public Observable<BaseResponse<List<Banner>>> getBanner(){
         return apiService.getBanner();
+    }
+
+    public Observable<BaseResponse<Login>> login(String username,String password){
+        return apiService.login(username,password);
+    }
+
+    public Observable<BaseResponse> logout(){
+        return apiService.logout();
+    }
+
+    public Observable<BaseResponse<Login>> register(String username,String password,String repassword){
+        return apiService.register(username,password,repassword);
+    }
+
+    public Observable<BaseResponse<Article>> getCollectList(int page){
+        return apiService.getCollectList(page);
     }
 }

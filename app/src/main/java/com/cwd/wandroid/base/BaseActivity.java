@@ -17,7 +17,7 @@ import butterknife.Unbinder;
 public abstract class BaseActivity extends AppCompatActivity implements BaseContract.View {
 
     private Unbinder unbinder;
-    public BaseActivity mContext;
+    public BaseActivity context;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -28,7 +28,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseCont
         setContentView(getLayoutId());
         StatusBarUtils.StatusBarLightMode(this);
         unbinder = ButterKnife.bind(this);
-        mContext = this;
+        context = this;
         ActivityCollector.getInstance().addActivity(this);
         createPresenter();
         init();

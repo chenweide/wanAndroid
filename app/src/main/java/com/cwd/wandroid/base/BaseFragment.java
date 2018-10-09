@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.cwd.wandroid.utils.ToastUtils;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -55,6 +57,6 @@ public abstract class BaseFragment extends Fragment implements BaseContract.View
     @Override
     public void showError(String message) {
         Log.e(getClass().getName(), message);
-        Toast.makeText(context, "网络异常", Toast.LENGTH_SHORT).show();
+        ToastUtils.showShort(message);
     }
 }
