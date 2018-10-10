@@ -29,6 +29,7 @@ import com.cwd.wandroid.contract.NavContract;
 import com.cwd.wandroid.entity.Login;
 import com.cwd.wandroid.presenter.LoginPresenter;
 import com.cwd.wandroid.source.DataManager;
+import com.cwd.wandroid.ui.activity.AboutActivity;
 import com.cwd.wandroid.ui.activity.CollectActivity;
 import com.cwd.wandroid.utils.SPUtils;
 
@@ -40,8 +41,6 @@ public class MineFragment extends BaseFragment implements LoginContract.View{
 
     @BindView(R.id.ll_user)
     LinearLayout llUser;
-    @BindView(R.id.ll_collect)
-    LinearLayout llCollect;
     @BindView(R.id.tv_username)
     TextView tvUsername;
 
@@ -109,6 +108,12 @@ public class MineFragment extends BaseFragment implements LoginContract.View{
     @OnClick(R.id.ll_collect)
     public void collectClick(){
         Intent intent = new Intent(context, CollectActivity.class);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.ll_about)
+    public void aboutClick(){
+        Intent intent = new Intent(context, AboutActivity.class);
         startActivity(intent);
     }
 

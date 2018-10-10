@@ -20,6 +20,11 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         mContext = this;
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
         refWatcher = LeakCanary.install(this);
         Logger.addLogAdapter(new AndroidLogAdapter(){
             @Override

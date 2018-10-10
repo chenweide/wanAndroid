@@ -50,14 +50,13 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:orientation="horizontal"
-        android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp">
 
         <LinearLayout
             android:id="@+id/ll_collect"
             style="@style/Rect"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="50dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingLeft="16dp"
@@ -72,6 +71,33 @@
                 style="@style/text_large_style"
                 android:layout_marginLeft="8dp"
                 android:text="收藏" />
+        </LinearLayout>
+    </FrameLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/ll_about"
+            style="@style/Rect"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/about" />
+
+            <TextView
+                style="@style/text_large_style"
+                android:layout_marginLeft="8dp"
+                android:text="关于" />
         </LinearLayout>
     </FrameLayout>
 </LinearLayout>
