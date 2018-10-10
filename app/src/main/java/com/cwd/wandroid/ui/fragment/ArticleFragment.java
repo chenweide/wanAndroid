@@ -103,9 +103,7 @@ public class ArticleFragment extends BaseFragment implements ArticleContract.Vie
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 ArticleInfo articleInfo = articleInfoList.get(position);
-                String url = articleInfo.getLink();
-                String title = articleInfo.getTitle();
-                WebViewActivity.startAction(getContext(),title,url);
+                WebViewActivity.startAction(getContext(),articleInfo);
             }
         });
         articleAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
@@ -158,10 +156,12 @@ public class ArticleFragment extends BaseFragment implements ArticleContract.Vie
         List<String> images = new ArrayList<>();
         final List<String> titles = new ArrayList<>();
         final List<String> urls = new ArrayList<>();
+        final List<Integer> ids = new ArrayList<>();
         for(Banner banner : banners){
             images.add(banner.getImagePath());
             titles.add(banner.getTitle());
             urls.add(banner.getUrl());
+            ids.add(banner.getId());
         }
 
         bannerView.isAutoPlay(true);
@@ -173,7 +173,10 @@ public class ArticleFragment extends BaseFragment implements ArticleContract.Vie
             public void OnBannerClick(int position) {
                 String link = urls.get(position);
                 String title = titles.get(position);
-                WebViewActivity.startAction(context,title,link);
+                ArticleInfo articleInfo = new ArticleInfo();
+                articleInfo.setLink(link);
+                articleInfo.setTitle(title);
+                WebViewActivity.startAction(context,articleInfo,false,false,position);
             }
         });
         bannerView.start();

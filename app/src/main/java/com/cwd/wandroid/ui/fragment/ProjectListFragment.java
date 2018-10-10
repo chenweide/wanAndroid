@@ -104,9 +104,7 @@ public class ProjectListFragment extends BaseFragment implements ProjectListCont
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 ArticleInfo articleInfo = articleInfoList.get(position);
-                String url = articleInfo.getLink();
-                String title = articleInfo.getTitle();
-                WebViewActivity.startAction(getContext(),title,url);
+                WebViewActivity.startAction(getContext(),articleInfo);
             }
         });
         articleAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {

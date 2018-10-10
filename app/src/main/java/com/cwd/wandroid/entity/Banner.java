@@ -6,6 +6,7 @@ public class Banner {
     private String imagePath;
     private String title;
     private String url;
+    private int id;
 
     public String getDesc() {
         return desc;
@@ -37,5 +38,13 @@ public class Banner {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

@@ -84,9 +84,7 @@ public class SearchActivity extends BaseActivity implements ArticleContract.View
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 ArticleInfo articleInfo = articleInfoList.get(position);
-                String url = articleInfo.getLink();
-                String title = articleInfo.getTitle();
-                WebViewActivity.startAction(context,title,url);
+                WebViewActivity.startAction(context,articleInfo);
             }
         });
         articleAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {

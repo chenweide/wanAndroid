@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import com.cwd.wandroid.utils.ToastUtils;
 
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -59,4 +61,5 @@ public abstract class BaseFragment extends Fragment implements BaseContract.View
         Log.e(getClass().getName(), message);
         ToastUtils.showShort(message);
     }
+
 }

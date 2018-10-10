@@ -69,4 +69,14 @@ public class DataManager {
     public Observable<BaseResponse<Article>> getCollectList(int page){
         return apiService.getCollectList(page);
     }
+
+    public Observable<BaseResponse> collectArticle(int id){
+        return apiService.collectArticle(id);
+    }
+
+    public Observable<BaseResponse> cancelCollectArticle(int id,int originId){
+        return apiService.cancelCollectArticle(id,originId);
+    }
+
+
 }

@@ -27,20 +27,11 @@ import com.cwd.wandroid.constants.Constants;
 import com.cwd.wandroid.contract.LoginContract;
 import com.cwd.wandroid.contract.NavContract;
 import com.cwd.wandroid.entity.Login;
-import com.cwd.wandroid.entity.NavInfo;
-import com.cwd.wandroid.entity.NavTitle;
 import com.cwd.wandroid.presenter.LoginPresenter;
-import com.cwd.wandroid.presenter.NavPresenter;
 import com.cwd.wandroid.source.DataManager;
-import com.cwd.wandroid.ui.activity.LoginActivity;
-import com.cwd.wandroid.ui.activity.WebViewActivity;
-import com.cwd.wandroid.ui.widget.FlowLayout;
-import com.cwd.wandroid.utils.DensityUtil;
+import com.cwd.wandroid.ui.activity.CollectActivity;
 import com.cwd.wandroid.utils.SPUtils;
-import com.cwd.wandroid.utils.ToastUtils;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -117,7 +108,8 @@ public class MineFragment extends BaseFragment implements LoginContract.View{
 
     @OnClick(R.id.ll_collect)
     public void collectClick(){
-
+        Intent intent = new Intent(context, CollectActivity.class);
+        startActivity(intent);
     }
 
     private void showLogoutDialog(){

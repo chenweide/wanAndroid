@@ -21,6 +21,7 @@ import com.cwd.wandroid.api.RetrofitUtils;
 import com.cwd.wandroid.base.BaseFragment;
 import com.cwd.wandroid.contract.NavContract;
 import com.cwd.wandroid.contract.ProjectContract;
+import com.cwd.wandroid.entity.ArticleInfo;
 import com.cwd.wandroid.entity.NavInfo;
 import com.cwd.wandroid.entity.NavTitle;
 import com.cwd.wandroid.entity.ProjectCategory;
@@ -111,10 +112,15 @@ public class NavFragment extends BaseFragment implements NavContract.View {
             textView.setBackgroundResource(R.drawable.flow_tab_bg);
             flowLayout.addView(textView, layoutParams);
             // 标签点击事件
+            final ArticleInfo articleInfo = new ArticleInfo();
+            articleInfo.setTitle(navInfo.getTitle());
+            articleInfo.setLink(navInfo.getLink());
+            articleInfo.setId(navInfo.getId());
+            articleInfo.setCollect(navInfo.isCollect());
             textView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    WebViewActivity.startAction(getActivity(),navInfo.getTitle(),navInfo.getLink());
+                    WebViewActivity.startAction(getActivity(),articleInfo);
                 }
             });
         }

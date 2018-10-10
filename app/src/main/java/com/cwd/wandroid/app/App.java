@@ -2,8 +2,12 @@ package com.cwd.wandroid.app;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.BuildConfig;
+import com.orhanobut.logger.Logger;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
@@ -17,6 +21,12 @@ public class App extends Application {
         super.onCreate();
         mContext = this;
         refWatcher = LeakCanary.install(this);
+        Logger.addLogAdapter(new AndroidLogAdapter(){
+            @Override
+            public boolean isLoggable(int priority, @Nullable String tag) {
+                return BuildConfig.DEBUG;
+            }
+        });
     }
 
     public static synchronized App getContext(){

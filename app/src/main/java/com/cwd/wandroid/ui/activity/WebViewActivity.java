@@ -16,11 +16,24 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
 import com.cwd.wandroid.R;
+import com.cwd.wandroid.api.ApiService;
+import com.cwd.wandroid.api.RetrofitUtils;
 import com.cwd.wandroid.base.BaseActivity;
+import com.cwd.wandroid.contract.CollectContract;
+import com.cwd.wandroid.entity.Article;
+import com.cwd.wandroid.entity.ArticleInfo;
+import com.cwd.wandroid.entity.MessageEvent;
+import com.cwd.wandroid.presenter.CollectPresenter;
+import com.cwd.wandroid.source.DataManager;
+import com.cwd.wandroid.utils.ToastUtils;
+
+import org.greenrobot.eventbus.EventBus;
+
+import java.util.List;
 
 import butterknife.BindView;
 
-public class WebViewActivity extends BaseActivity {
+public class WebViewActivity extends BaseActivity implements CollectContract.View{
 
     @BindView(R.id.tool_bar)
     Toolbar toolbar;
@@ -31,6 +44,16 @@ public class WebViewActivity extends BaseActivity {
 
     private String url;
     private String title;
+    private int id;
+    private int originId;
+    private boolean enableCollect;
+    //是否从收藏列表跳转过来的
+    private boolean isFromCollect;
+    //发送取消收藏发送通知到收藏列表，但需要等到回到收藏列表后再移除，视觉效果好些
+    private int position = -1;
+
+    private MenuItem menuItem;
+    private CollectPresenter collectPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,13 +67,21 @@ public class WebViewActivity extends BaseActivity {
 
     @Override
     public void createPresenter() {
-
+        DataManager dataManager = new DataManager(RetrofitUtils.get().retrofit().create(ApiService.class));
+        collectPresenter = new CollectPresenter(dataManager);
+        collectPresenter.attachView(this);
     }
 
-    public static void startAction(Context context,String title, String url){
+    public static void startAction(Context context, ArticleInfo articleInfo){
+        startAction(context,articleInfo,true,false,0);
+    }
+
+    public static void startAction(Context context, ArticleInfo articleInfo,boolean enableCollect,boolean isFromCollect,int position){
         Intent intent = new Intent(context,WebViewActivity.class);
-        intent.putExtra("TITLE",title);
-        intent.putExtra("URL",url);
+        intent.putExtra("ARTICLE_INFO",articleInfo);
+        intent.putExtra("ENABLE_COLLECT",enableCollect);
+        intent.putExtra("IS_FROM_COLLECT",isFromCollect);
+        intent.putExtra("POSITION",position);
         context.startActivity(intent);
     }
 
@@ -58,8 +89,14 @@ public class WebViewActivity extends BaseActivity {
     public void init() {
         setSupportActionBar(toolbar);
         Intent intent = getIntent();
-        url = intent.getStringExtra("URL");
-        title = intent.getStringExtra("TITLE");
+        ArticleInfo articleInfo = (ArticleInfo) intent.getSerializableExtra("ARTICLE_INFO");
+        url = articleInfo.getLink();
+        title = articleInfo.getTitle();
+        id = articleInfo.getId();
+        originId = articleInfo.getOriginId() == 0 ? -1 : articleInfo.getOriginId();
+        enableCollect = intent.getBooleanExtra("ENABLE_COLLECT",true);
+        isFromCollect = intent.getBooleanExtra("IS_FROM_COLLECT",false);
+        position = intent.getIntExtra("POSITION",0);
         toolbar.setTitle(title != null ? title : "");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         webView.getSettings().setJavaScriptEnabled(true);
@@ -91,6 +128,17 @@ public class WebViewActivity extends BaseActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.web_view_menu,menu);
+        menuItem = menu.getItem(0);
+        if(!enableCollect){
+            //如果是banner点进来的则不显示收藏按钮
+            menuItem.setVisible(false);
+        }else{
+            if(isFromCollect){
+                menuItem.setTitle("取消收藏");
+            }else{
+                menuItem.setTitle("收藏");
+            }
+        }
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -101,6 +149,13 @@ public class WebViewActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.collect:
+                if(isFromCollect){
+                    //取消收藏
+                    collectPresenter.cancelCollectArticle(id,originId);
+                }else{
+                    //收藏
+                    collectPresenter.collectArticle(id);
+                }
                 break;
             case R.id.open_by_browser:
                 openByBrowser();
@@ -120,4 +175,28 @@ public class WebViewActivity extends BaseActivity {
             startActivity(intent);
         }
     }
+
+    @Override
+    public void showArticleList(List<ArticleInfo> articleInfoList, boolean isEnd) {
+
+    }
+
+    @Override
+    public void showNoCollectView() {
+
+    }
+
+    @Override
+    public void showCollectSuccess() {
+        ToastUtils.showShort("收藏成功");
+    }
+
+    @Override
+    public void showCancelCollectSuccess() {
+        ToastUtils.showShort("取消收藏成功");
+        MessageEvent event = new MessageEvent();
+        event.setPosition(position);
+        EventBus.getDefault().post(event);
+    }
+
 }

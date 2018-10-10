@@ -2,13 +2,13 @@ package com.cwd.wandroid.presenter;
 
 import com.cwd.wandroid.base.BasePresenter;
 import com.cwd.wandroid.contract.ArticleContract;
+import com.cwd.wandroid.contract.CollectContract;
 import com.cwd.wandroid.entity.Article;
 import com.cwd.wandroid.entity.ArticleInfo;
 import com.cwd.wandroid.entity.Banner;
 import com.cwd.wandroid.entity.BaseResponse;
 import com.cwd.wandroid.source.DataManager;
 import com.cwd.wandroid.utils.LogUtils;
-import com.orhanobut.logger.Logger;
 
 import java.util.List;
 
@@ -18,50 +18,18 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class ArticlePresenter extends BasePresenter<ArticleContract.View> implements ArticleContract.Presenter {
+public class CollectPresenter extends BasePresenter<CollectContract.View> implements CollectContract.Presenter {
 
     private Disposable disposable;
     private DataManager dataManager;
 
-    public ArticlePresenter(DataManager dataManager){
+    public CollectPresenter(DataManager dataManager){
         this.dataManager = dataManager;
     }
 
     @Override
-    public void getArticleList(int page) {
-        Observable<BaseResponse<Article>> observable = dataManager.getArticleList(page);
-        observable.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<BaseResponse<Article>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        disposable = d;
-                    }
-
-                    @Override
-                    public void onNext(BaseResponse<Article> articleBaseResponse) {
-                        if(articleBaseResponse.getErrorCode() != 0){
-                            getView().showError(articleBaseResponse.getErrorMsg());
-                            return;
-                        }
-                        getView().showArticleList(articleBaseResponse.getData().getDatas(),articleBaseResponse.getData().isOver());
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        getView().showError(e.getMessage());
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-    }
-
-    @Override
-    public void getSearchList(int page, String keyword) {
-        Observable<BaseResponse<Article>> observable = dataManager.getSearchList(page,keyword);
+    public void getCollectList(int page) {
+        Observable<BaseResponse<Article>> observable = dataManager.getCollectList(page);
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<BaseResponse<Article>>() {
@@ -77,10 +45,9 @@ public class ArticlePresenter extends BasePresenter<ArticleContract.View> implem
                             return;
                         }
                         List<ArticleInfo> articleInfoList = articleBaseResponse.getData().getDatas();
-                        if(articleInfoList.isEmpty()){
-                            getView().showNoSearchResultView();
+                        if(articleInfoList == null){
+                            getView().showNoCollectView();
                         }else{
-                            Logger.d(articleInfoList);
                             getView().showArticleList(articleInfoList,articleBaseResponse.getData().isOver());
                         }
                     }
@@ -98,25 +65,54 @@ public class ArticlePresenter extends BasePresenter<ArticleContract.View> implem
     }
 
     @Override
-    public void getBanner() {
-        Observable<BaseResponse<List<Banner>>> observable = dataManager.getBanner();
+    public void collectArticle(int id) {
+        Observable<BaseResponse> observable = dataManager.collectArticle(id);
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<BaseResponse<List<Banner>>>() {
+                .subscribe(new Observer<BaseResponse>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         disposable = d;
                     }
 
                     @Override
-                    public void onNext(BaseResponse<List<Banner>> resp) {
-                        if(resp.getErrorCode() != 0){
+                    public void onNext(BaseResponse resp) {
+                        if(resp.getErrorCode() == 0){
+                            getView().showCollectSuccess();
+                        }else{
                             getView().showError(resp.getErrorMsg());
-                            return;
                         }
-                        List<Banner> bannerList = resp.getData();
-                        if(!bannerList.isEmpty()){
-                            getView().showBanner(bannerList);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        getView().showError(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @Override
+    public void cancelCollectArticle(int id,int originId) {
+        Observable<BaseResponse> observable = dataManager.cancelCollectArticle(id,originId);
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<BaseResponse>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        disposable = d;
+                    }
+
+                    @Override
+                    public void onNext(BaseResponse resp) {
+                        if(resp.getErrorCode() == 0){
+                            getView().showCancelCollectSuccess();
+                        }else{
+                            getView().showError(resp.getErrorMsg());
                         }
                     }
 

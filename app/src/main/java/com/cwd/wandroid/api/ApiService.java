@@ -118,4 +118,21 @@ public interface ApiService {
      */
     @GET("/lg/collect/list/{page}/json")
     Observable<BaseResponse<Article>> getCollectList(@Path("page") int page);
+
+    /**
+     * 收藏文章
+     * @param id
+     * @return
+     */
+    @POST("/lg/collect/{id}/json")
+    Observable<BaseResponse> collectArticle(@Path("id") int id);
+
+    /**
+     * 取消收藏文章
+     * @param id
+     * @param originId
+     * @return
+     */
+    @POST("/lg/uncollect/{id}/json")
+    Observable<BaseResponse> cancelCollectArticle(@Path("id") int id,@Query("originId") int originId);
 }

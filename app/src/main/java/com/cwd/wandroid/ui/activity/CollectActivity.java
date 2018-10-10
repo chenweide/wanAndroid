@@ -4,10 +4,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -18,18 +15,22 @@ import com.cwd.wandroid.adapter.ArticleAdapter;
 import com.cwd.wandroid.api.ApiService;
 import com.cwd.wandroid.api.RetrofitUtils;
 import com.cwd.wandroid.base.BaseActivity;
-import com.cwd.wandroid.contract.ArticleContract;
+import com.cwd.wandroid.contract.CollectContract;
 import com.cwd.wandroid.entity.ArticleInfo;
-import com.cwd.wandroid.entity.Banner;
-import com.cwd.wandroid.presenter.ArticlePresenter;
+import com.cwd.wandroid.entity.MessageEvent;
+import com.cwd.wandroid.presenter.CollectPresenter;
 import com.cwd.wandroid.source.DataManager;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 
-public class CollectActivity extends BaseActivity implements ArticleContract.View, SwipeRefreshLayout.OnRefreshListener {
+public class CollectActivity extends BaseActivity implements CollectContract.View, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.tool_bar)
     Toolbar toolbar;
@@ -39,13 +40,13 @@ public class CollectActivity extends BaseActivity implements ArticleContract.Vie
     SwipeRefreshLayout refreshLayout;
 
 
-    private ArticlePresenter articlePresenter;
+    private CollectPresenter collectPresenter;
     private DataManager dataManager;
     private ArticleAdapter articleAdapter;
     private List<ArticleInfo> articleInfoList = new ArrayList<>();
     private int page = 0;
     private boolean isRefresh;
-    private String keyword = "";
+    private int needRemoveItemPosition = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,19 +55,21 @@ public class CollectActivity extends BaseActivity implements ArticleContract.Vie
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_search;
+        return R.layout.activity_collect;
     }
 
     @Override
     public void createPresenter() {
         dataManager = new DataManager(RetrofitUtils.get().retrofit().create(ApiService.class));
-        articlePresenter = new ArticlePresenter(dataManager);
-        articlePresenter.attachView(this);
+        collectPresenter = new CollectPresenter(dataManager);
+        collectPresenter.attachView(this);
     }
 
     @Override
     public void init() {
+        EventBus.getDefault().register(this);
         setSupportActionBar(toolbar);
+        toolbar.setTitle("收藏");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         refreshLayout.setColorSchemeResources(R.color.colorAccent);
         refreshLayout.setOnRefreshListener(this);
@@ -77,9 +80,7 @@ public class CollectActivity extends BaseActivity implements ArticleContract.Vie
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 ArticleInfo articleInfo = articleInfoList.get(position);
-                String url = articleInfo.getLink();
-                String title = articleInfo.getTitle();
-                WebViewActivity.startAction(context,title,url);
+                WebViewActivity.startAction(context,articleInfo,true,true,position);
             }
         });
         articleAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
@@ -87,38 +88,11 @@ public class CollectActivity extends BaseActivity implements ArticleContract.Vie
             public void onLoadMoreRequested() {
                 isRefresh = false;
                 page++;
-                articlePresenter.getSearchList(page,keyword);
+                collectPresenter.getCollectList(page);
             }
         },rvArticle);
         rvArticle.setAdapter(articleAdapter);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.search_menu,menu);
-        MenuItem menuItem = menu.findItem(R.id.search);
-        SearchView searchView = (SearchView) menuItem.getActionView();
-        searchView.setIconified(false);
-        searchView.onActionViewExpanded();
-        searchView.setQueryHint("搜索文章...");
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                articleInfoList.clear();
-                keyword = newText;
-                if(TextUtils.isEmpty(keyword)){
-                    keyword = "";
-                }
-                articlePresenter.getSearchList(page,keyword);
-                return true;
-            }
-        });
-        return super.onCreateOptionsMenu(menu);
+        collectPresenter.getCollectList(page);
     }
 
     @Override
@@ -144,7 +118,7 @@ public class CollectActivity extends BaseActivity implements ArticleContract.Vie
         refreshLayout.setRefreshing(true);
         page = 0;
         isRefresh = true;
-        articlePresenter.getSearchList(page,keyword);
+        collectPresenter.getCollectList(page);
     }
 
     @Override
@@ -164,15 +138,46 @@ public class CollectActivity extends BaseActivity implements ArticleContract.Vie
     }
 
     @Override
-    public void showNoSearchResultView() {
+    public void showNoCollectView() {
+        refreshLayout.setRefreshing(false);
         View emptyView = View.inflate(context,R.layout.empty_view,null);
         TextView tvContent = emptyView.findViewById(R.id.tv_content);
-        tvContent.setText("暂无搜索结果，换个关键词试试");
+        tvContent.setText("暂无收藏文章");
         articleAdapter.setEmptyView(emptyView);
     }
 
     @Override
-    public void showBanner(List<Banner> banners) {
+    public void showCollectSuccess() {
 
+    }
+
+    @Override
+    public void showCancelCollectSuccess() {
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(needRemoveItemPosition != -1){
+            articleInfoList.remove(needRemoveItemPosition);
+            if(!articleInfoList.isEmpty()){
+                articleAdapter.notifyItemRemoved(needRemoveItemPosition);
+            }else{
+                articleAdapter.notifyDataSetChanged();
+            }
+            needRemoveItemPosition = -1;
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(MessageEvent event) {
+        needRemoveItemPosition = event.getPosition();
     }
 }

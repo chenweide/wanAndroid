@@ -10,6 +10,9 @@ import android.widget.Toast;
 
 import com.cwd.wandroid.app.ActivityCollector;
 import com.cwd.wandroid.utils.StatusBarUtils;
+import com.cwd.wandroid.utils.ToastUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -55,7 +58,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseCont
 
     @Override
     public void showError(String message) {
-        Log.e(getClass().getName(), message);
-        Toast.makeText(this, "网络异常", Toast.LENGTH_SHORT).show();
+        ToastUtils.showShort(message);
     }
 }

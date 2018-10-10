@@ -1,8 +1,9 @@
 package com.cwd.wandroid.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class ArticleInfo {
+public class ArticleInfo implements Serializable{
 
     /**
      * apkLink :
@@ -53,6 +54,7 @@ public class ArticleInfo {
     private int visible;
     private int zan;
     private List<?> tags;
+    private int originId;
 
     public String getApkLink() {
         return apkLink;
@@ -236,5 +238,13 @@ public class ArticleInfo {
 
     public void setTags(List<?> tags) {
         this.tags = tags;
+    }
+
+    public int getOriginId() {
+        return originId;
+    }
+
+    public void setOriginId(int originId) {
+        this.originId = originId;
     }
 }
