@@ -145,7 +145,7 @@
 }
 
 # for DexGuard only
--keepresourcexmlelements manifest/application/meta-data@value=GlideModule
+#-keepresourcexmlelements manifest/application/meta-data@value=GlideModule
 # banner
 -keep class com.youth.banner.** {
     *;
@@ -163,4 +163,9 @@
      private void readObject(java.io.ObjectInputStream);
      java.lang.Object writeReplace();
      java.lang.Object readResolve();
+ }
+
+ #这个成员变量变混淆的话，会导致通过反射修改的没有动画效果的代码失效
+ -keepclassmembers class android.support.design.internal.BottomNavigationMenuView {
+     boolean mShiftingMode;
  }
