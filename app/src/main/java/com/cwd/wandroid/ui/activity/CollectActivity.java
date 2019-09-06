@@ -174,6 +174,7 @@ public class CollectActivity extends BaseActivity implements CollectContract.Vie
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+        collectPresenter.detachView();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

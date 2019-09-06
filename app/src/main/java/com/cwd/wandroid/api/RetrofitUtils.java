@@ -28,7 +28,7 @@ public class RetrofitUtils {
     /**
      * 接口地址
      */
-    public static final String BASE_API = "http://www.wanandroid.com";
+    public static final String BASE_API = "https://www.wanandroid.com";
     public static final int CONNECT_TIME_OUT = 30;
     public static final int READ_TIME_OUT = 30;
     public static final int WRITE_TIME_OUT = 30;

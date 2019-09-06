@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.Window;
 import android.widget.Toast;
 
+import com.cwd.wandroid.R;
 import com.cwd.wandroid.app.ActivityCollector;
 import com.cwd.wandroid.utils.StatusBarUtils;
 import com.cwd.wandroid.utils.ToastUtils;
@@ -60,4 +61,5 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseCont
     public void showError(String message) {
         ToastUtils.showShort(message);
     }
+
 }

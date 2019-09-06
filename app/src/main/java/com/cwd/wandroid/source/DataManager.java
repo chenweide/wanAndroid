@@ -3,8 +3,10 @@ package com.cwd.wandroid.source;
 
 import com.cwd.wandroid.api.ApiService;
 import com.cwd.wandroid.entity.Article;
+import com.cwd.wandroid.entity.ArticleInfo;
 import com.cwd.wandroid.entity.Banner;
 import com.cwd.wandroid.entity.BaseResponse;
+import com.cwd.wandroid.entity.HotKey;
 import com.cwd.wandroid.entity.Login;
 import com.cwd.wandroid.entity.NavTitle;
 import com.cwd.wandroid.entity.ProjectCategory;
@@ -24,6 +26,10 @@ public class DataManager {
 
     public Observable<BaseResponse<Article>> getArticleList(int page){
         return apiService.getArticleList(page);
+    }
+
+    public Observable<BaseResponse<List<ArticleInfo>>> getTopAticleList(){
+        return apiService.getTopArticleList();
     }
 
     public Observable<BaseResponse<List<ProjectCategory>>> getProjectCategory(){
@@ -78,5 +84,8 @@ public class DataManager {
         return apiService.cancelCollectArticle(id,originId);
     }
 
+    public Observable<BaseResponse<List<HotKey>>> getHotKey(){
+        return apiService.getHotKey();
+    }
 
 }

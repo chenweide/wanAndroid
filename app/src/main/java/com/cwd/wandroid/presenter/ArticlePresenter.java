@@ -60,6 +60,38 @@ public class ArticlePresenter extends BasePresenter<ArticleContract.View> implem
     }
 
     @Override
+    public void getTopArticleList() {
+        Observable<BaseResponse<List<ArticleInfo>>> observable = dataManager.getTopAticleList();
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<BaseResponse<List<ArticleInfo>>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        disposable = d;
+                    }
+
+                    @Override
+                    public void onNext(BaseResponse<List<ArticleInfo>> articleBaseResponse) {
+                        if(articleBaseResponse.getErrorCode() != 0){
+                            getView().showError(articleBaseResponse.getErrorMsg());
+                            return;
+                        }
+                        getView().showTopArticleList(articleBaseResponse.getData());
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        getView().showError(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @Override
     public void getSearchList(int page, String keyword) {
         Observable<BaseResponse<Article>> observable = dataManager.getSearchList(page,keyword);
         observable.subscribeOn(Schedulers.io())

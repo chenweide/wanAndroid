@@ -34,6 +34,14 @@
         android:textStyle="bold"
         android:layout_below="@id/tv_title"
         android:layout_marginTop="12dp"/>
+    <TextView
+        android:id="@+id/tv_flag"
+        style="@style/text_small_style"
+        android:text="flag"
+        android:textColor="@color/red"
+        android:layout_alignTop="@id/tv_category"
+        android:layout_alignParentRight="true"
+        android:visibility="gone"/>
     <View
         style="@style/line_style"
         android:layout_below="@id/tv_category"

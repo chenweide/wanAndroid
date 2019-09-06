@@ -24,11 +24,15 @@ import com.cwd.wandroid.api.ApiService;
 import com.cwd.wandroid.api.RetrofitUtils;
 import com.cwd.wandroid.base.BaseActivity;
 import com.cwd.wandroid.contract.ArticleContract;
+import com.cwd.wandroid.contract.SearchContract;
 import com.cwd.wandroid.entity.ArticleInfo;
 import com.cwd.wandroid.entity.Banner;
+import com.cwd.wandroid.entity.HotKey;
 import com.cwd.wandroid.presenter.ArticlePresenter;
+import com.cwd.wandroid.presenter.SearchPresenter;
 import com.cwd.wandroid.source.DataManager;
 import com.cwd.wandroid.ui.fragment.ArticleFragment;
+import com.cwd.wandroid.ui.widget.HotKeyPop;
 import com.cwd.wandroid.utils.ToastUtils;
 
 import java.util.ArrayList;
@@ -36,7 +40,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class SearchActivity extends BaseActivity implements ArticleContract.View, SwipeRefreshLayout.OnRefreshListener {
+public class SearchActivity extends BaseActivity implements ArticleContract.View,SearchContract.View, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.tool_bar)
     Toolbar toolbar;
@@ -47,12 +51,14 @@ public class SearchActivity extends BaseActivity implements ArticleContract.View
 
 
     private ArticlePresenter articlePresenter;
+    private SearchPresenter searchPresenter;
     private DataManager dataManager;
     private ArticleAdapter articleAdapter;
     private List<ArticleInfo> articleInfoList = new ArrayList<>();
     private int page = 0;
     private boolean isRefresh;
     private String keyword = "";
+    private SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +74,9 @@ public class SearchActivity extends BaseActivity implements ArticleContract.View
     public void createPresenter() {
         dataManager = new DataManager(RetrofitUtils.get().retrofit().create(ApiService.class));
         articlePresenter = new ArticlePresenter(dataManager);
+        searchPresenter = new SearchPresenter(dataManager);
         articlePresenter.attachView(this);
+        searchPresenter.attachView(this);
     }
 
     @Override
@@ -96,13 +104,14 @@ public class SearchActivity extends BaseActivity implements ArticleContract.View
             }
         },rvArticle);
         rvArticle.setAdapter(articleAdapter);
+//        searchPresenter.getHotKey();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.search_menu,menu);
         MenuItem menuItem = menu.findItem(R.id.search);
-        SearchView searchView = (SearchView) menuItem.getActionView();
+        searchView = (SearchView) menuItem.getActionView();
         searchView.setIconified(false);
         searchView.onActionViewExpanded();
         searchView.setQueryHint("搜索文章...");
@@ -114,7 +123,12 @@ public class SearchActivity extends BaseActivity implements ArticleContract.View
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                if(TextUtils.isEmpty(newText)){
+                    return false;
+                }
+                refreshLayout.setRefreshing(false);
                 articleInfoList.clear();
+                articleAdapter.notifyDataSetChanged();
                 keyword = newText;
                 if(TextUtils.isEmpty(keyword)){
                     keyword = "";
@@ -169,7 +183,13 @@ public class SearchActivity extends BaseActivity implements ArticleContract.View
     }
 
     @Override
+    public void showTopArticleList(List<ArticleInfo> topArticleList) {
+
+    }
+
+    @Override
     public void showNoSearchResultView() {
+        articleAdapter.loadMoreEnd();
         View emptyView = View.inflate(context,R.layout.empty_view,null);
         TextView tvContent = emptyView.findViewById(R.id.tv_content);
         tvContent.setText("暂无搜索结果，换个关键词试试");
@@ -178,6 +198,23 @@ public class SearchActivity extends BaseActivity implements ArticleContract.View
 
     @Override
     public void showBanner(List<Banner> banners) {
+
+    }
+
+    @Override
+    public void showHotKey(List<HotKey> hotKeyList) {
+        HotKeyPop pop = new HotKeyPop(context,hotKeyList);
+        pop.setOnHotKeyClickListener(new HotKeyPop.OnHotKeyClickListener() {
+            @Override
+            public void onHotKeyClick(String key) {
+                page = 0;
+                keyword = key;
+                if(searchView != null){
+                    searchView.setQuery(keyword,true);
+                }
+            }
+        });
+        pop.showAsDropDown(toolbar);
 
     }
 }

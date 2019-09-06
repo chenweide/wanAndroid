@@ -10,12 +10,14 @@ public interface ArticleContract {
 
     interface View extends BaseContract.View{
         void showArticleList(List<ArticleInfo> articleInfoList,boolean isEnd);
+        void showTopArticleList(List<ArticleInfo> topArticleList);
         void showNoSearchResultView();
         void showBanner(List<Banner> banners);
     }
 
     interface Presenter extends BaseContract.Presenter<View>{
         void getArticleList(int page);
+        void getTopArticleList();
         void getSearchList(int page,String keyword);
         void getBanner();
     }

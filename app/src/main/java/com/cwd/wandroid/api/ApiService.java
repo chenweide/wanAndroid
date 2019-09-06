@@ -1,8 +1,10 @@
 package com.cwd.wandroid.api;
 
 import com.cwd.wandroid.entity.Article;
+import com.cwd.wandroid.entity.ArticleInfo;
 import com.cwd.wandroid.entity.Banner;
 import com.cwd.wandroid.entity.BaseResponse;
+import com.cwd.wandroid.entity.HotKey;
 import com.cwd.wandroid.entity.Login;
 import com.cwd.wandroid.entity.NavTitle;
 import com.cwd.wandroid.entity.ProjectCategory;
@@ -36,6 +38,13 @@ public interface ApiService {
      */
     @GET("/article/list/{page}/json")
     Observable<BaseResponse<Article>> getArticleList(@Path("page") int page);
+
+    /**
+     * 获取置顶文章
+     * @return
+     */
+    @GET("/article/top/json")
+    Observable<BaseResponse<List<ArticleInfo>>> getTopArticleList();
 
     /**
      * 项目分类
@@ -135,4 +144,11 @@ public interface ApiService {
      */
     @POST("/lg/uncollect/{id}/json")
     Observable<BaseResponse> cancelCollectArticle(@Path("id") int id,@Query("originId") int originId);
+
+    /**
+     * 搜索热词
+     * @return
+     */
+    @GET("/hotkey/json")
+    Observable<BaseResponse<List<HotKey>>> getHotKey();
 }

@@ -22,6 +22,17 @@ public class ArticleAdapter extends BaseQuickAdapter<ArticleInfo,BaseViewHolder>
         helper.setText(R.id.tv_date,item.getNiceDate());
         helper.setText(R.id.tv_title,item.getTitle());
         helper.setText(R.id.tv_category,item.getChapterName());
-
+        int type = item.getType();
+        if(type == 1){
+            helper.setVisible(R.id.tv_flag,true);
+            helper.setText(R.id.tv_flag,"TOP");
+        }else{
+           if(item.isFresh()){
+               helper.setVisible(R.id.tv_flag,true);
+               helper.setText(R.id.tv_flag,"NEW");
+           }else{
+               helper.setVisible(R.id.tv_flag,false);
+           }
+        }
     }
 }

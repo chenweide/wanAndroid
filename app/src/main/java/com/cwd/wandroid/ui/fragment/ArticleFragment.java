@@ -117,6 +117,7 @@ public class ArticleFragment extends BaseFragment implements ArticleContract.Vie
         rvArticle.setAdapter(articleAdapter);
         refreshLayout.setRefreshing(true);
         articlePresenter.getArticleList(page);
+        articlePresenter.getTopArticleList();
         articlePresenter.getBanner();
         bannerLayout = LayoutInflater.from(context).inflate(R.layout.banner_layout,null);
         bannerView = bannerLayout.findViewById(R.id.banner);
@@ -130,9 +131,7 @@ public class ArticleFragment extends BaseFragment implements ArticleContract.Vie
     @Override
     public void showArticleList(List<ArticleInfo> list,boolean isEnd) {
         refreshLayout.setRefreshing(false);
-        if(isRefresh){
-            articleInfoList.clear();
-        }else{
+        if(!isRefresh){
             if(isEnd){
                 articleAdapter.loadMoreEnd();
             }else{
@@ -140,6 +139,12 @@ public class ArticleFragment extends BaseFragment implements ArticleContract.Vie
             }
         }
         articleInfoList.addAll(list);
+        articleAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showTopArticleList(List<ArticleInfo> topArticleList) {
+        articleInfoList.addAll(0,topArticleList);
         articleAdapter.notifyDataSetChanged();
     }
 
@@ -194,7 +199,9 @@ public class ArticleFragment extends BaseFragment implements ArticleContract.Vie
         refreshLayout.setRefreshing(true);
         page = 0;
         isRefresh = true;
+        articleInfoList.clear();
         articlePresenter.getArticleList(page);
+        articlePresenter.getTopArticleList();
     }
 
     @Override

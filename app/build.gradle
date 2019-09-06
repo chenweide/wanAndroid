@@ -57,4 +57,5 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
     implementation 'org.greenrobot:eventbus:3.1.1'
+    implementation 'com.github.paulyung541:LaybelLayout:v1.2.0'
 }

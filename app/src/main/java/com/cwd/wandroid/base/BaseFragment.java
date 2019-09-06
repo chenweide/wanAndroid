@@ -22,6 +22,7 @@ public abstract class BaseFragment extends Fragment implements BaseContract.View
 
     public Context context;
     private Unbinder unbinder;
+    public View view;
 
     @Override
     public void onAttach(Context context) {
@@ -33,7 +34,7 @@ public abstract class BaseFragment extends Fragment implements BaseContract.View
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(getLayoutId(), container, false);
+        view = inflater.inflate(getLayoutId(), container, false);
         unbinder = ButterKnife.bind(this, view);
         onFragmentViewCreated();
         createPresenter();
