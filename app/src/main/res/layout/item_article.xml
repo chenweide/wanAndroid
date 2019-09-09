@@ -5,7 +5,16 @@
     android:paddingLeft="12dp"
     android:paddingRight="12dp"
     style="@style/Rect">
-
+    <TextView
+        android:id="@+id/tv_flag"
+        style="@style/text_small_style"
+        android:text="flag"
+        android:textSize="8sp"
+        android:textColor="@color/red"
+        android:gravity="center"
+        android:background="@drawable/shape_stroke_radius_6"
+        android:padding="2dp"
+        android:visibility="gone"/>
     <TextView
         android:id="@+id/tv_date"
         style="@style/text_small_tint_style"
@@ -24,7 +33,18 @@
         style="@style/text_large_style"
         android:text="title"
         android:layout_marginTop="12dp"
-        android:layout_below="@id/tv_date"/>
+        android:layout_below="@id/tv_date"
+        android:layout_marginRight="56dp"/>
+
+    <ImageView
+        android:id="@+id/iv_pic"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/icon_default"
+        android:scaleType="centerCrop"
+        android:layout_alignTop="@id/tv_title"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="2dp"/>
 
     <TextView
         android:id="@+id/tv_category"
@@ -34,14 +54,7 @@
         android:textStyle="bold"
         android:layout_below="@id/tv_title"
         android:layout_marginTop="12dp"/>
-    <TextView
-        android:id="@+id/tv_flag"
-        style="@style/text_small_style"
-        android:text="flag"
-        android:textColor="@color/red"
-        android:layout_alignTop="@id/tv_category"
-        android:layout_alignParentRight="true"
-        android:visibility="gone"/>
+
     <View
         style="@style/line_style"
         android:layout_below="@id/tv_category"

@@ -146,7 +146,11 @@ public class WebViewActivity extends BaseActivity implements CollectContract.Vie
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                finish();
+                if(webView.canGoBack()){
+                    webView.goBack();
+                }else{
+                    finish();
+                }
                 break;
             case R.id.collect:
                 if(isFromCollect){

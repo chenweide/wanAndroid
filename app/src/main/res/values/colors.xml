@@ -13,6 +13,7 @@
     <color name="transparent">#00000000</color>
     <color name="black">#ff000000</color>
     <color name="red">#FF0000</color>
+    <color name="top_item_bg">#D8D8D8</color>
 
 
     <color name="textColor">#2D2D2D</color>
