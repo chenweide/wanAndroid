@@ -2,6 +2,7 @@ package com.cwd.wandroid.ui.activity;
 
 import android.animation.Animator;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -11,10 +12,12 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewAnimationUtils;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -32,7 +35,9 @@ import com.cwd.wandroid.presenter.ArticlePresenter;
 import com.cwd.wandroid.presenter.SearchPresenter;
 import com.cwd.wandroid.source.DataManager;
 import com.cwd.wandroid.ui.fragment.ArticleFragment;
+import com.cwd.wandroid.ui.widget.FlowLayout;
 import com.cwd.wandroid.ui.widget.HotKeyPop;
+import com.cwd.wandroid.utils.DensityUtil;
 import com.cwd.wandroid.utils.ToastUtils;
 
 import java.util.ArrayList;
@@ -48,7 +53,10 @@ public class SearchActivity extends BaseActivity implements ArticleContract.View
     RecyclerView rvArticle;
     @BindView(R.id.refreshLayout)
     SwipeRefreshLayout refreshLayout;
-
+    @BindView(R.id.fl_hot)
+    FlowLayout flHot;
+    @BindView(R.id.ll_hot)
+    LinearLayout llHot;
 
     private ArticlePresenter articlePresenter;
     private SearchPresenter searchPresenter;
@@ -104,7 +112,7 @@ public class SearchActivity extends BaseActivity implements ArticleContract.View
             }
         },rvArticle);
         rvArticle.setAdapter(articleAdapter);
-//        searchPresenter.getHotKey();
+        searchPresenter.getHotKey();
     }
 
     @Override
@@ -124,7 +132,12 @@ public class SearchActivity extends BaseActivity implements ArticleContract.View
             @Override
             public boolean onQueryTextChange(String newText) {
                 if(TextUtils.isEmpty(newText)){
+                    llHot.setVisibility(View.VISIBLE);
+                    rvArticle.setVisibility(View.GONE);
                     return false;
+                }else{
+                    llHot.setVisibility(View.GONE);
+                    rvArticle.setVisibility(View.VISIBLE);
                 }
                 refreshLayout.setRefreshing(false);
                 articleInfoList.clear();
@@ -163,6 +176,10 @@ public class SearchActivity extends BaseActivity implements ArticleContract.View
         refreshLayout.setRefreshing(true);
         page = 0;
         isRefresh = true;
+        if(TextUtils.isEmpty(keyword)){
+          refreshLayout.setRefreshing(false);
+          return;
+        }
         articlePresenter.getSearchList(page,keyword);
     }
 
@@ -203,18 +220,50 @@ public class SearchActivity extends BaseActivity implements ArticleContract.View
 
     @Override
     public void showHotKey(List<HotKey> hotKeyList) {
-        HotKeyPop pop = new HotKeyPop(context,hotKeyList);
-        pop.setOnHotKeyClickListener(new HotKeyPop.OnHotKeyClickListener() {
-            @Override
-            public void onHotKeyClick(String key) {
+//        HotKeyPop pop = new HotKeyPop(context,hotKeyList);
+//        pop.setOnHotKeyClickListener(new HotKeyPop.OnHotKeyClickListener() {
+//            @Override
+//            public void onHotKeyClick(String key) {
+//                page = 0;
+//                keyword = key;
+//                if(searchView != null){
+//                    searchView.setQuery(keyword,true);
+//                }
+//            }
+//        });
+//        pop.showAsDropDown(toolbar);
+        initTab(flHot,hotKeyList);
+    }
+
+
+    private void initTab(FlowLayout flowLayout, final List<HotKey> tags) {
+        flowLayout.removeAllViews();
+        LinearLayout.MarginLayoutParams layoutParams = new LinearLayout.MarginLayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        // 设置边距
+        layoutParams.setMargins(10, 30, 10, 8);
+        for (int i = 0; i < tags.size(); i++) {
+            final HotKey hotKey = tags.get(i);
+            final TextView textView = new TextView(context);
+            textView.setTag(i);
+            textView.setTextSize(15);
+            textView.setText(hotKey.getName());
+            textView.setGravity(Gravity.CENTER);
+            textView.setPadding(DensityUtil.dip2px(context, 18), DensityUtil.dip2px(context, 5), DensityUtil.dip2px(context, 18), DensityUtil.dip2px(context, 5));
+            textView.setTextColor(ContextCompat.getColor(context, R.color.textColor));
+            textView.setBackgroundResource(R.drawable.flow_tab_bg);
+            flowLayout.addView(textView, layoutParams);
+            // 标签点击事件
+            textView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                String key = hotKey.getName();
                 page = 0;
                 keyword = key;
                 if(searchView != null){
                     searchView.setQuery(keyword,true);
                 }
-            }
-        });
-        pop.showAsDropDown(toolbar);
-
+                }
+            });
+        }
     }
 }

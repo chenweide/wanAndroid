@@ -141,6 +141,7 @@ public class ProjectListFragment extends BaseFragment implements ProjectListCont
 
     @Override
     public void showProjectList(List<ArticleInfo> projectList, boolean isEnd) {
+        if(refreshLayout == null) return;
         refreshLayout.setRefreshing(false);
         if(isRefresh){
             articleInfoList.clear();
