@@ -33,7 +33,8 @@
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:src="@drawable/icon_down"
-                android:padding="10dp"/>
+                android:padding="10dp"
+                style="@style/Border"/>
         </LinearLayout>
 
     </RelativeLayout>

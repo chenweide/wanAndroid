@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.PopupWindow;
 
 import com.cwd.wandroid.R;
 import com.cwd.wandroid.adapter.ProjectFragmentAdapter;
@@ -33,6 +35,8 @@ public class SystemDetailActivity extends BaseActivity {
     TabLayout tabLayout;
     @BindView(R.id.vp_project)
     ViewPager vpProject;
+    @BindView(R.id.iv_expand)
+    ImageView ivExpand;
 
     public static final String SYSTEM = "system";
     private System system;
@@ -138,6 +142,13 @@ public class SystemDetailActivity extends BaseActivity {
                 });
             }
             categoryPop.showAsDropDown(tabLayout);
+            ivExpand.animate().rotation(180).setDuration(200).start();
+            categoryPop.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                @Override
+                public void onDismiss() {
+                    ivExpand.animate().rotation(0).setDuration(200).start();
+                }
+            });
         }
     }
 }

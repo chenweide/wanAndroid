@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cwd.wandroid.R;
@@ -156,7 +157,14 @@ public class ProjectFragment extends BaseFragment implements ProjectContract.Vie
                     }
                 });
             }
+            ivExpand.animate().rotation(180).setDuration(200).start();
             categoryPop.showAsDropDown(tabLayout);
+            categoryPop.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                @Override
+                public void onDismiss() {
+                    ivExpand.animate().rotation(0).setDuration(200).start();
+                }
+            });
         }
     }
 
