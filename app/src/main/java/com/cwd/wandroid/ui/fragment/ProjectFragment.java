@@ -1,5 +1,6 @@
 package com.cwd.wandroid.ui.fragment;
 
+import android.animation.Animator;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -10,6 +11,9 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewAnimationUtils;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cwd.wandroid.R;
@@ -27,12 +31,15 @@ import com.cwd.wandroid.presenter.ArticlePresenter;
 import com.cwd.wandroid.presenter.ProjectPresenter;
 import com.cwd.wandroid.source.DataManager;
 import com.cwd.wandroid.ui.activity.WebViewActivity;
+import com.cwd.wandroid.ui.widget.ProjectCategoryPop;
+import com.cwd.wandroid.utils.DensityUtil;
 import com.cwd.wandroid.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class ProjectFragment extends BaseFragment implements ProjectContract.View {
 
@@ -40,9 +47,14 @@ public class ProjectFragment extends BaseFragment implements ProjectContract.Vie
     TabLayout tabLayout;
     @BindView(R.id.vp_project)
     ViewPager vpProject;
+    @BindView(R.id.iv_expand)
+    ImageView ivExpand;
 
     private ProjectPresenter projectPresenter;
     private DataManager dataManager;
+    private ProjectCategoryPop categoryPop;
+
+    private List<ProjectCategory> categoryList;
 
     public ProjectFragment() {
 
@@ -125,9 +137,27 @@ public class ProjectFragment extends BaseFragment implements ProjectContract.Vie
 
     @Override
     public void showProjectCategory(List<ProjectCategory> categoryList) {
+        this.categoryList = categoryList;
         initTab(categoryList);
         initViewPager(categoryList);
         tabLayout.setupWithViewPager(vpProject);
+    }
+
+    @OnClick(R.id.iv_expand)
+    public void expand(){
+        if(categoryList != null && !categoryList.isEmpty()){
+            if(categoryPop == null){
+                categoryPop = new ProjectCategoryPop(getActivity(),categoryList);
+                categoryPop.setOnCategoryClickListener(new ProjectCategoryPop.OnCategoryClickListener() {
+                    @Override
+                    public void onCategoryClick(ProjectCategory category,int position) {
+                        categoryPop.dismiss();
+                        vpProject.setCurrentItem(position,true);
+                    }
+                });
+            }
+            categoryPop.showAsDropDown(tabLayout);
+        }
     }
 
 }

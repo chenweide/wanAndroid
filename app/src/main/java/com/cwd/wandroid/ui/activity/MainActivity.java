@@ -50,7 +50,7 @@ public class MainActivity extends BaseActivity implements LoginContract.View {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    toolbar.setTitle("Google Android");
+                    toolbar.setTitle("悟Android");
                     addFragment(fragmentList.get(0));
                     showFragment(0);
                     return true;

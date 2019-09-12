@@ -18,10 +18,12 @@ import com.cwd.wandroid.entity.ProjectCategory;
 import com.cwd.wandroid.entity.System;
 import com.cwd.wandroid.entity.SystemDetail;
 import com.cwd.wandroid.ui.fragment.ProjectFragment;
+import com.cwd.wandroid.ui.widget.ProjectCategoryPop;
 
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class SystemDetailActivity extends BaseActivity {
 
@@ -34,6 +36,10 @@ public class SystemDetailActivity extends BaseActivity {
 
     public static final String SYSTEM = "system";
     private System system;
+
+    private ProjectCategoryPop categoryPop;
+
+    private List<ProjectCategory> systemDetailList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +62,7 @@ public class SystemDetailActivity extends BaseActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setTitle(system.getName());
+        this.systemDetailList = system.getChildren();
         initTab(system.getChildren());
         initViewPager(system.getChildren());
         tabLayout.setupWithViewPager(vpProject);
@@ -77,14 +84,14 @@ public class SystemDetailActivity extends BaseActivity {
         }
     }
 
-    private void initTab(List<SystemDetail> systemDetailList){
-        for (SystemDetail systemDetail : systemDetailList){
+    private void initTab(List<ProjectCategory> systemDetailList){
+        for (ProjectCategory systemDetail : systemDetailList){
             tabLayout.addTab(tabLayout.newTab().setText(systemDetail.getName()));
         }
         tabLayout.addOnTabSelectedListener(tabListener);
     }
 
-    private void initViewPager(List<SystemDetail> systemDetailList){
+    private void initViewPager(List<ProjectCategory> systemDetailList){
         vpProject.setAdapter(new SystemDetailFragmentAdapter(getSupportFragmentManager(),systemDetailList));
     }
 
@@ -115,5 +122,22 @@ public class SystemDetailActivity extends BaseActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @OnClick(R.id.iv_expand)
+    public void expand(){
+        if(systemDetailList != null && !systemDetailList.isEmpty()){
+            if(categoryPop == null){
+                categoryPop = new ProjectCategoryPop(this,systemDetailList);
+                categoryPop.setOnCategoryClickListener(new ProjectCategoryPop.OnCategoryClickListener() {
+                    @Override
+                    public void onCategoryClick(ProjectCategory category,int position) {
+                        categoryPop.dismiss();
+                        vpProject.setCurrentItem(position,true);
+                    }
+                });
+            }
+            categoryPop.showAsDropDown(tabLayout);
+        }
     }
 }

@@ -22,7 +22,7 @@ public class System implements Serializable{
     private int order;
     private int parentChapterId;
     private int visible;
-    private List<SystemDetail> children;
+    private List<ProjectCategory> children;
 
     public int getCourseId() {
         return courseId;
@@ -72,11 +72,11 @@ public class System implements Serializable{
         this.visible = visible;
     }
 
-    public List<SystemDetail> getChildren() {
+    public List<ProjectCategory> getChildren() {
         return children;
     }
 
-    public void setChildren(List<SystemDetail> children) {
+    public void setChildren(List<ProjectCategory> children) {
         this.children = children;
     }
 }

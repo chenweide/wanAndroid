@@ -10,6 +10,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.cwd.wandroid.R;
 import com.cwd.wandroid.entity.ArticleInfo;
+import com.cwd.wandroid.entity.ProjectCategory;
 import com.cwd.wandroid.entity.System;
 import com.cwd.wandroid.entity.SystemDetail;
 import com.cwd.wandroid.ui.widget.FlowLayout;
@@ -30,7 +31,7 @@ public class SystemAdapter extends BaseQuickAdapter<System,BaseViewHolder> {
         initTab(flowLayout,item.getChildren());
     }
 
-    private void initTab(FlowLayout flowLayout, final List<SystemDetail> tags) {
+    private void initTab(FlowLayout flowLayout, final List<ProjectCategory> tags) {
         flowLayout.removeAllViews();
         LinearLayout.MarginLayoutParams layoutParams = new LinearLayout.MarginLayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         // 设置边距

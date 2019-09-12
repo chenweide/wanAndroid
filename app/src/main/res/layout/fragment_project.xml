@@ -7,14 +7,36 @@
     android:orientation="vertical"
     tools:context=".ui.fragment.ProjectFragment">
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tab_layout"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:tabMode="scrollable"
-        app:tabTextColor="@color/textColorTint"
-        app:tabSelectedTextColor="@color/textColor"
-        android:background="@color/colorPrimary"/>
+        android:layout_height="wrap_content">
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabMode="scrollable"
+            app:tabTextColor="@color/textColorTint"
+            app:tabSelectedTextColor="@color/textColor"
+            android:background="@color/colorPrimary"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentRight="true"
+            android:gravity="center_vertical"
+            android:background="@drawable/shape_more_tab_shadow" >
+            <View
+                android:layout_width="50dp"
+                android:layout_height="45dp"/>
+            <ImageView
+                android:id="@+id/iv_expand"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:src="@drawable/icon_down"
+                android:padding="10dp"/>
+        </LinearLayout>
+
+    </RelativeLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/vp_project"

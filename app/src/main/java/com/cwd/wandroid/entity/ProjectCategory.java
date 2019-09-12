@@ -1,8 +1,9 @@
 package com.cwd.wandroid.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class ProjectCategory {
+public class ProjectCategory implements Serializable {
 
 
     /**

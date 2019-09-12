@@ -6,6 +6,7 @@
     <color name="statusBar">#D8D8D8</color>
     <color name="menuItemDefault">#7D7D7D</color>
     <color name="menuItemChecked">#000000</color>
+    <color name="dialogBgColor">#4D000000</color>
 
     <color name="theme">#F9E77F</color>
     <color name="themeTint">#fff5bb</color>

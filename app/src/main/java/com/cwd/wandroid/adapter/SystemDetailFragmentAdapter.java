@@ -13,9 +13,9 @@ import java.util.List;
 
 public class SystemDetailFragmentAdapter extends FragmentStatePagerAdapter {
 
-    private List<SystemDetail> systemDetailList;
+    private List<ProjectCategory> systemDetailList;
 
-    public SystemDetailFragmentAdapter(FragmentManager fm, List<SystemDetail> systemDetailList) {
+    public SystemDetailFragmentAdapter(FragmentManager fm, List<ProjectCategory> systemDetailList) {
         super(fm);
         this.systemDetailList = systemDetailList;
     }
