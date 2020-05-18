@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#FFFFFF</color>
-    <color name="colorPrimaryDark">#F5F5F5</color>
-    <color name="colorAccent">#000000</color>
-    <color name="statusBar">#D8D8D8</color>
-    <color name="menuItemDefault">#7D7D7D</color>
-    <color name="menuItemChecked">#000000</color>
-    <color name="dialogBgColor">#4D000000</color>
-    <color name="itemBgColor">#FFFFFF</color>
+    <color name="colorPrimary">#0F0F0F</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">#FFFFFF</color>
+    <color name="statusBar">#1A1A1A</color>
+    <color name="menuItemDefault">#EAEAEA</color>
+    <color name="menuItemChecked">#FFFFFF</color>
+    <color name="dialogBgColor">#1A1A1A</color>
+    <color name="itemBgColor">#202020</color>
 
     <color name="theme">#F9E77F</color>
     <color name="themeTint">#fff5bb</color>
-    <color name="white">#FFFFFF</color>
+    <color name="white">#1A1A1A</color>
     <color name="transparent">#00000000</color>
-    <color name="black">#ff000000</color>
+    <color name="black">#EAEAEA</color>
     <color name="red">#FF0000</color>
     <color name="top_item_bg">#D8D8D8</color>
 
 
-    <color name="textColor">#2D2D2D</color>
-    <color name="textColorTint">#7D7D7D</color>
+    <color name="textColor">#F5F5F5</color>
+    <color name="textColorTint">#DFDFDF</color>
     <color name="attrTagColor">#353535</color>
     <color name="largeTextColorTint">#353535</color>
     <color name="priceColor">#F27769</color>
     <color name="greenTint">#9CDEC4</color>
-    <color name="line">#DCDCDC</color>
+    <color name="line">#2A2A2A</color>
     <color name="lineTint">#EEEEEE</color>
     <color name="lineDeep">#000000</color>
     <color name="gray">#BABABA</color>
-    <color name="grayBg">#F7F7F7</color>
-    <color name="grayBtn">#ECECEC</color>
+    <color name="grayBg">#202020</color>
+    <color name="grayBtn">#303030</color>
     <color name="bubbleBg">#FF8375</color>
 
     <color name="imgBgGray">#F0F1F3</color>
