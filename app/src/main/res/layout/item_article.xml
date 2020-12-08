@@ -34,7 +34,8 @@
         android:text="title"
         android:layout_marginTop="12dp"
         android:layout_below="@id/tv_date"
-        android:layout_marginRight="56dp"/>
+        android:layout_marginRight="56dp"
+        android:transitionName="title"/>
 
     <ImageView
         android:id="@+id/iv_pic"

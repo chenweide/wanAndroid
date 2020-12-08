@@ -1,6 +1,7 @@
 package com.cwd.wandroid.ui.activity;
 
 import android.animation.Animator;
+import android.annotation.SuppressLint;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
@@ -11,12 +12,18 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewAnimationUtils;
+import android.widget.ActionMenuView;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -40,10 +47,12 @@ import com.cwd.wandroid.ui.widget.HotKeyPop;
 import com.cwd.wandroid.utils.DensityUtil;
 import com.cwd.wandroid.utils.ToastUtils;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class SearchActivity extends BaseActivity implements ArticleContract.View,SearchContract.View, SwipeRefreshLayout.OnRefreshListener {
 
@@ -57,6 +66,8 @@ public class SearchActivity extends BaseActivity implements ArticleContract.View
     FlowLayout flHot;
     @BindView(R.id.ll_hot)
     LinearLayout llHot;
+    @BindView(R.id.et_key)
+    EditText etKey;
 
     private ArticlePresenter articlePresenter;
     private SearchPresenter searchPresenter;
@@ -89,6 +100,7 @@ public class SearchActivity extends BaseActivity implements ArticleContract.View
 
     @Override
     public void init() {
+        initEditText();
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         refreshLayout.setColorSchemeResources(R.color.colorAccent);
@@ -115,26 +127,20 @@ public class SearchActivity extends BaseActivity implements ArticleContract.View
         searchPresenter.getHotKey();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.search_menu,menu);
-        MenuItem menuItem = menu.findItem(R.id.search);
-        searchView = (SearchView) menuItem.getActionView();
-        searchView.setIconified(false);
-        searchView.onActionViewExpanded();
-        searchView.setQueryHint("搜索文章...");
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+    private void initEditText(){
+        etKey.requestFocus();
+        etKey.addTextChangedListener(new TextWatcher() {
             @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
             }
 
             @Override
-            public boolean onQueryTextChange(String newText) {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String newText = s.toString();
                 if(TextUtils.isEmpty(newText)){
                     llHot.setVisibility(View.VISIBLE);
                     rvArticle.setVisibility(View.GONE);
-                    return false;
                 }else{
                     llHot.setVisibility(View.GONE);
                     rvArticle.setVisibility(View.VISIBLE);
@@ -147,22 +153,13 @@ public class SearchActivity extends BaseActivity implements ArticleContract.View
                     keyword = "";
                 }
                 articlePresenter.getSearchList(page,keyword);
-                return true;
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
             }
         });
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                break;
-            default:
-                break;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -259,11 +256,15 @@ public class SearchActivity extends BaseActivity implements ArticleContract.View
                 String key = hotKey.getName();
                 page = 0;
                 keyword = key;
-                if(searchView != null){
-                    searchView.setQuery(keyword,true);
-                }
+                etKey.setText(keyword);
                 }
             });
         }
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @OnClick(R.id.iv_back)
+    public void back(){
+        finishAfterTransition();
     }
 }

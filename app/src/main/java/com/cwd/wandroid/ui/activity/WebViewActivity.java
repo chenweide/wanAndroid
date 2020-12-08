@@ -14,6 +14,7 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.cwd.wandroid.R;
 import com.cwd.wandroid.api.ApiService;
@@ -29,6 +30,7 @@ import com.cwd.wandroid.utils.ToastUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 import butterknife.BindView;
@@ -99,6 +101,7 @@ public class WebViewActivity extends BaseActivity implements CollectContract.Vie
         position = intent.getIntExtra("POSITION",0);
         toolbar.setTitle(title != null ? title : "");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setSupportZoom(true);
         webView.setWebChromeClient(new WebChromeClient(){
@@ -123,6 +126,26 @@ public class WebViewActivity extends BaseActivity implements CollectContract.Vie
             }
         });
         webView.loadUrl(url);
+
+//        try {
+//            TextView tvTitle = reflectToolbarTitleTextView();
+//            tvTitle.setTransitionName("title");
+//        } catch (NoSuchFieldException e) {
+//            e.printStackTrace();
+//        } catch (IllegalAccessException e) {
+//            e.printStackTrace();
+//        }
+    }
+
+    private TextView reflectToolbarTitleTextView() throws NoSuchFieldException, IllegalAccessException {
+        if(toolbar != null){
+            Class<? extends Toolbar> aClass = toolbar.getClass();
+            Field mTitleTextView = aClass.getDeclaredField("mTitleTextView");
+            mTitleTextView.setAccessible(true);
+            TextView tvTitle = (TextView) mTitleTextView.get(toolbar);
+            return tvTitle;
+        }
+        return null;
     }
 
     @Override

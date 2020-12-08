@@ -1,5 +1,6 @@
 package com.cwd.wandroid.ui.activity;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
@@ -7,10 +8,12 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.ActionMenuView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.cwd.wandroid.R;
 import com.cwd.wandroid.api.ApiService;
@@ -30,6 +33,7 @@ import com.cwd.wandroid.utils.BottomNavigationViewHelper;
 import com.cwd.wandroid.utils.SPUtils;
 import com.cwd.wandroid.utils.ToastUtils;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +43,8 @@ public class MainActivity extends BaseActivity implements LoginContract.View {
 
     @BindView(R.id.tool_bar)
     Toolbar toolbar;
+
+    private ActionMenuView menuView;
 
     private DataManager dataManager;
     private LoginPresenter loginPresenter;
@@ -155,13 +161,33 @@ public class MainActivity extends BaseActivity implements LoginContract.View {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.search:
-                Intent intent = new Intent(context,SearchActivity.class);
-                context.startActivity(intent);
+                try {
+                    menuView = reflectToolbarMenuView();
+                } catch (NoSuchFieldException | IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+
+//                Intent intent = new Intent(context,SearchActivity.class);
+//                context.startActivity(intent);
+                if(menuView != null){
+                    Intent intent = new Intent(this,SearchActivity.class);
+                    startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this,menuView,"search").toBundle());
+                }
                 break;
             default:
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private ActionMenuView reflectToolbarMenuView() throws NoSuchFieldException, IllegalAccessException {
+        if(toolbar != null){
+            Class<? extends Toolbar> aClass = toolbar.getClass();
+            Field mTitleTextView = aClass.getDeclaredField("mMenuView");
+            mTitleTextView.setAccessible(true);
+            return (ActionMenuView) mTitleTextView.get(toolbar);
+        }
+        return null;
     }
 
     @Override

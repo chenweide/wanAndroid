@@ -1,12 +1,15 @@
 package com.cwd.wandroid.ui.fragment;
 
+import android.app.ActivityOptions;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cwd.wandroid.R;
@@ -104,6 +107,13 @@ public class ArticleFragment extends BaseFragment implements ArticleContract.Vie
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 ArticleInfo articleInfo = articleInfoList.get(position);
                 WebViewActivity.startAction(getContext(),articleInfo);
+//                TextView tvTitle = view.findViewById(R.id.tv_title);
+//                Intent intent = new Intent(getActivity(),WebViewActivity.class);
+//                intent.putExtra("ARTICLE_INFO",articleInfo);
+//                intent.putExtra("ENABLE_COLLECT",true);
+//                intent.putExtra("IS_FROM_COLLECT",false);
+//                intent.putExtra("POSITION",0);
+//                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity(),tvTitle,"title").toBundle());
             }
         });
         articleAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
