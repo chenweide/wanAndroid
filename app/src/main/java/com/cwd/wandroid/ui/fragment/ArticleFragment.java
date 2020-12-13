@@ -4,6 +4,7 @@ import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,7 +24,9 @@ import com.cwd.wandroid.entity.Banner;
 import com.cwd.wandroid.presenter.ArticlePresenter;
 import com.cwd.wandroid.source.DataManager;
 import com.cwd.wandroid.ui.activity.WebViewActivity;
+import com.cwd.wandroid.utils.DensityUtil;
 import com.cwd.wandroid.utils.GlideImageLoader;
+import com.cwd.wandroid.utils.LogUtils;
 import com.cwd.wandroid.utils.ToastUtils;
 import com.youth.banner.listener.OnBannerListener;
 
@@ -32,6 +35,9 @@ import java.util.List;
 import java.util.prefs.Preferences;
 
 import butterknife.BindView;
+import butterknife.OnClick;
+
+import static android.support.v7.widget.RecyclerView.SCROLL_STATE_DRAGGING;
 
 public class ArticleFragment extends BaseFragment implements ArticleContract.View, SwipeRefreshLayout.OnRefreshListener {
 
@@ -39,6 +45,8 @@ public class ArticleFragment extends BaseFragment implements ArticleContract.Vie
     RecyclerView rvArticle;
     @BindView(R.id.refreshLayout)
     SwipeRefreshLayout refreshLayout;
+    @BindView(R.id.fab_top)
+    FloatingActionButton fabTop;
 
     private com.youth.banner.Banner bannerView;
     private View bannerLayout;
@@ -125,6 +133,7 @@ public class ArticleFragment extends BaseFragment implements ArticleContract.Vie
             }
         },rvArticle);
         rvArticle.setAdapter(articleAdapter);
+        rvArticle.addOnScrollListener(scrollListener);
         refreshLayout.setRefreshing(true);
         articlePresenter.getArticleList(page);
         articlePresenter.getTopArticleList();
@@ -132,6 +141,33 @@ public class ArticleFragment extends BaseFragment implements ArticleContract.Vie
         bannerLayout = LayoutInflater.from(context).inflate(R.layout.banner_layout,null);
         bannerView = bannerLayout.findViewById(R.id.banner);
     }
+
+    private final RecyclerView.OnScrollListener scrollListener = new RecyclerView.OnScrollListener() {
+
+        private boolean isDragging = false;
+
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            if (newState == SCROLL_STATE_DRAGGING) {
+                isDragging = true;
+            }
+        }
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            if (isDragging) {
+                if (dy > 0) {
+                    //上拉
+                    fabTop.animate().scaleX(0).scaleY(0).setDuration(200).start();
+                } else {
+                    //下拉
+                    fabTop.animate().scaleX(1).scaleY(1).setDuration(200).start();
+                }
+                isDragging = false;
+            }
+            LogUtils.d("dy" + dy);
+        }
+    };
 
     @Override
     public void onDetach() {
@@ -224,5 +260,22 @@ public class ArticleFragment extends BaseFragment implements ArticleContract.Vie
     public void onStop() {
         super.onStop();
         bannerView.stopAutoPlay();
+    }
+
+    @OnClick(R.id.fab_top)
+    public void backTop() {
+        if(page > 2) {
+            rvArticle.scrollToPosition(0);
+        } else {
+            rvArticle.smoothScrollToPosition(0);
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if(rvArticle != null) {
+            rvArticle.removeOnScrollListener(scrollListener);
+        }
     }
 }

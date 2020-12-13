@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragment.ArticleFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -15,5 +16,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </android.support.v4.widget.SwipeRefreshLayout>
-
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|bottom"
+        android:layout_margin="26dp"
+        app:backgroundTint="@color/white"
+        android:src="@drawable/ic_baseline_arrow_upward_24"/>
 </FrameLayout>
