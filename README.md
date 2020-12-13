@@ -14,6 +14,7 @@
 ***
 Apk下载：[WanAndroid.apk](https://pan.baidu.com/s/1SGMtVlZvUW7ZqbAF6ssGNA)
 ***
+![image](https://github.com/chenweide/WidgetLibs/blob/master/image/widget_example.gif)
 <div align="center">
 <!--   <img src="http://thyrsi.com/t6/385/1539141394x-1404775437.jpg" width="30%" height="30%"/> -->
 <!--   <img src="http://thyrsi.com/t6/385/1539141451x-1404775437.jpg" width="30%" height="30%"/>
