@@ -2,7 +2,7 @@
 ## 一款浏览Android学习文章的App
 **开源不易，如果喜欢的话希望给个 `Star` 或 `Fork` ^_^ ，谢谢~~**
 
-### 该项目主要架构为Material Design+MVP+Retrofit2+Rxjava2，基于鸿洋大神提供的[玩Android](http://www.wanandroid.com/)的开放API构建而成。
+**该项目主要架构为Material Design+MVP+Retrofit2+Rxjava2，基于鸿洋大神提供的[玩Android](http://www.wanandroid.com/)的开放API构建而成**
 ## 主要开源框架
 - [Butterknife](https://github.com/JakeWharton/butterknife)
 - [Glide](https://github.com/bumptech/glide)
