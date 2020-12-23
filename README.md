@@ -22,8 +22,12 @@
 
 ## Statement
 **项目中的 API 均来自于 [www.wanandroid.com](http://www.wanandroid.com/) 网站，纯属学习交流使用，不得用于商业用途。**
- 
- ## LICENSE
+
+## 更新日志
+** v1.0.1 2020.12.13
+改进搜索页的转场动画
+文章列表添加回到顶部按钮
+** v1.0.0 long long ago
 
 ***
 Apk下载：[WanAndroid.apk](https://pan.baidu.com/s/1SGMtVlZvUW7ZqbAF6ssGNA)
