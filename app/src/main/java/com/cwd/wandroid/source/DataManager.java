@@ -8,6 +8,7 @@ import com.cwd.wandroid.entity.Banner;
 import com.cwd.wandroid.entity.BaseResponse;
 import com.cwd.wandroid.entity.HotKey;
 import com.cwd.wandroid.entity.Login;
+import com.cwd.wandroid.entity.MyIntegral;
 import com.cwd.wandroid.entity.NavTitle;
 import com.cwd.wandroid.entity.ProjectCategory;
 import com.cwd.wandroid.entity.System;
@@ -86,6 +87,10 @@ public class DataManager {
 
     public Observable<BaseResponse<List<HotKey>>> getHotKey(){
         return apiService.getHotKey();
+    }
+
+    public Observable<BaseResponse<MyIntegral>> getMyIntegral(){
+        return apiService.getMyIntegral();
     }
 
 }

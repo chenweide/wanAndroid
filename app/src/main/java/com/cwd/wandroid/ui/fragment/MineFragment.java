@@ -1,5 +1,6 @@
 package com.cwd.wandroid.ui.fragment;
 
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,6 +15,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -31,6 +33,8 @@ import com.cwd.wandroid.presenter.LoginPresenter;
 import com.cwd.wandroid.source.DataManager;
 import com.cwd.wandroid.ui.activity.AboutActivity;
 import com.cwd.wandroid.ui.activity.CollectActivity;
+import com.cwd.wandroid.ui.activity.IntegralActivity;
+import com.cwd.wandroid.ui.activity.SearchActivity;
 import com.cwd.wandroid.utils.SPUtils;
 
 
@@ -43,6 +47,8 @@ public class MineFragment extends BaseFragment implements LoginContract.View{
     LinearLayout llUser;
     @BindView(R.id.tv_username)
     TextView tvUsername;
+    @BindView(R.id.iv_integral)
+    ImageView ivIntegral;
 
     private AlertDialog loginDialog;
 
@@ -106,15 +112,21 @@ public class MineFragment extends BaseFragment implements LoginContract.View{
     }
 
     @OnClick(R.id.ll_collect)
-    public void collectClick(){
+    public void collectClick() {
         Intent intent = new Intent(context, CollectActivity.class);
         startActivity(intent);
     }
 
     @OnClick(R.id.ll_about)
-    public void aboutClick(){
+    public void aboutClick() {
         Intent intent = new Intent(context, AboutActivity.class);
         startActivity(intent);
+    }
+
+    @OnClick(R.id.ll_integral)
+    public void integralClick() {
+        Intent intent = new Intent(context, IntegralActivity.class);
+        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity(),ivIntegral,"integral").toBundle());
     }
 
     private void showLogoutDialog(){

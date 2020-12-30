@@ -30,6 +30,7 @@
         <activity android:name=".ui.activity.SearchActivity" />
         <activity android:name=".ui.activity.CollectActivity" />
         <activity android:name=".ui.activity.AboutActivity"/>
+        <activity android:name=".ui.activity.IntegralActivity"/>
     </application>
 
 </manifest>
