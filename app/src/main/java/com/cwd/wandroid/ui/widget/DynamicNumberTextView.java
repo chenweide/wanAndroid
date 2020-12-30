@@ -91,10 +91,6 @@ public class DynamicNumberTextView extends View implements Runnable {
         mPaint.setTextSize(textSize);
     }
 
-    private void logic() {
-
-    }
-
     private void drawView(Canvas canvas) {
         float textWidth = getTextWidthHeight().width();
         float textHeight = getTextWidthHeight().height();
@@ -104,7 +100,6 @@ public class DynamicNumberTextView extends View implements Runnable {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        logic();
         drawView(canvas);
     }
 
