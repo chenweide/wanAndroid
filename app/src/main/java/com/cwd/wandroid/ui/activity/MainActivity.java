@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.cwd.wandroid.R;
 import com.cwd.wandroid.api.ApiService;
 import com.cwd.wandroid.api.RetrofitUtils;
+import com.cwd.wandroid.app.ActivityCollector;
 import com.cwd.wandroid.base.BaseActivity;
 import com.cwd.wandroid.constants.Constants;
 import com.cwd.wandroid.contract.LoginContract;
@@ -120,11 +121,31 @@ public class MainActivity extends BaseActivity implements LoginContract.View {
         addFragment(fragmentList.get(0));
         showFragment(0);
 
+        try {
+            TextView tvLogo = reflectToolbarTitleTextView();
+            if (tvLogo != null) {
+                tvLogo.setTransitionName("logo");
+            }
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
         String username = (String) SPUtils.get(context, Constants.USERNAME,"");
         String password = (String) SPUtils.get(context, Constants.PASSWORD,"");
         if(!TextUtils.isEmpty(username) && !TextUtils.isEmpty(password)){
             loginPresenter.login(username,password);
         }
+    }
+
+    private TextView reflectToolbarTitleTextView() throws NoSuchFieldException, IllegalAccessException {
+        if(toolbar != null){
+            Class<? extends Toolbar> aClass = toolbar.getClass();
+            Field mTitleTextView = aClass.getDeclaredField("mTitleTextView");
+            mTitleTextView.setAccessible(true);
+            TextView tvTitle = (TextView) mTitleTextView.get(toolbar);
+            return tvTitle;
+        }
+        return null;
     }
 
     private void initFragments(){
@@ -198,5 +219,11 @@ public class MainActivity extends BaseActivity implements LoginContract.View {
     @Override
     public void logoutSuccess() {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        ActivityCollector.getInstance().exitApp();
     }
 }

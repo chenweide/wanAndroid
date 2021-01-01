@@ -17,12 +17,14 @@ import com.cwd.wandroid.R;
 import com.cwd.wandroid.adapter.ArticleAdapter;
 import com.cwd.wandroid.api.ApiService;
 import com.cwd.wandroid.api.RetrofitUtils;
+import com.cwd.wandroid.app.ActivityCollector;
 import com.cwd.wandroid.base.BaseFragment;
 import com.cwd.wandroid.contract.ArticleContract;
 import com.cwd.wandroid.entity.ArticleInfo;
 import com.cwd.wandroid.entity.Banner;
 import com.cwd.wandroid.presenter.ArticlePresenter;
 import com.cwd.wandroid.source.DataManager;
+import com.cwd.wandroid.ui.activity.SplashActivity;
 import com.cwd.wandroid.ui.activity.WebViewActivity;
 import com.cwd.wandroid.utils.DensityUtil;
 import com.cwd.wandroid.utils.GlideImageLoader;
@@ -192,6 +194,7 @@ public class ArticleFragment extends BaseFragment implements ArticleContract.Vie
     public void showTopArticleList(List<ArticleInfo> topArticleList) {
         articleInfoList.addAll(0,topArticleList);
         articleAdapter.notifyDataSetChanged();
+        ActivityCollector.getInstance().finishActivity(SplashActivity.class);
     }
 
     @Override

@@ -2,6 +2,8 @@ package com.cwd.wandroid.app;
 
 import android.app.Activity;
 
+import com.cwd.wandroid.base.BaseActivity;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -32,6 +34,15 @@ public class ActivityCollector {
     public void removeActivity(Activity act) {
         if (allActivities != null) {
             allActivities.remove(act);
+        }
+    }
+
+    public void finishActivity(Class<? extends BaseActivity> c) {
+        for (Activity activity : allActivities) {
+            Class<? extends Activity> aClass = activity.getClass();
+            if(aClass == c) {
+                activity.finish();
+            }
         }
     }
 

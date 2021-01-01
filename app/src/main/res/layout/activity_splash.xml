@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".ui.activity.SplashActivity">
+
+    <TextView
+        android:id="@+id/tv_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="悟Android"
+        android:textSize="50sp"
+        android:textStyle="bold"
+        android:textColor="@color/textColor"
+        android:layout_centerInParent="true"
+        android:padding="10dp"
+        android:gravity="center"
+        android:transitionName="logo"/>
+
+</RelativeLayout>
