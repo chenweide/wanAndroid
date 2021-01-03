@@ -1,6 +1,6 @@
 # Android 版 WanAndroid 客户端
 ## 一款浏览Android学习文章的App
-**项目地址(http://www.wanandroid.com/)**
+**项目地址(https://github.com/chenweide/wanAndroid)**
 
 **开源不易，如果喜欢的话希望给个 `Star` 或 `Fork` ^_^ ，谢谢~~**
 
