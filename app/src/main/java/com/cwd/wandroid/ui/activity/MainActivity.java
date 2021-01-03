@@ -33,6 +33,7 @@ import com.cwd.wandroid.ui.fragment.SystemFragment;
 import com.cwd.wandroid.utils.BottomNavigationViewHelper;
 import com.cwd.wandroid.utils.SPUtils;
 import com.cwd.wandroid.utils.ToastUtils;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;

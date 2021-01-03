@@ -169,3 +169,7 @@
  -keepclassmembers class android.support.design.internal.BottomNavigationMenuView {
      boolean mShiftingMode;
  }
+
+ #bugly
+ -dontwarn com.tencent.bugly.**
+ -keep public class com.tencent.bugly.**{*;}

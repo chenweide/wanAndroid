@@ -36,6 +36,7 @@ import com.cwd.wandroid.ui.activity.CollectActivity;
 import com.cwd.wandroid.ui.activity.IntegralActivity;
 import com.cwd.wandroid.ui.activity.SearchActivity;
 import com.cwd.wandroid.utils.SPUtils;
+import com.tencent.bugly.beta.Beta;
 
 
 import butterknife.BindView;
@@ -127,6 +128,11 @@ public class MineFragment extends BaseFragment implements LoginContract.View{
     public void integralClick() {
         Intent intent = new Intent(context, IntegralActivity.class);
         startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity(),ivIntegral,"integral").toBundle());
+    }
+
+    @OnClick(R.id.ll_update)
+    public void updateClick() {
+        Beta.checkUpgrade(true,false);
     }
 
     private void showLogoutDialog(){

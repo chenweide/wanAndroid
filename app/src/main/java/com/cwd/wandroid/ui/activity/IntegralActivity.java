@@ -19,6 +19,7 @@ import com.cwd.wandroid.presenter.IntegralPresenter;
 import com.cwd.wandroid.source.DataManager;
 import com.cwd.wandroid.ui.widget.DynamicNumberTextView;
 import com.cwd.wandroid.utils.DensityUtil;
+import com.cwd.wandroid.utils.ToastUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -26,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class IntegralActivity extends BaseActivity implements IntegralContract.View {
 
@@ -66,6 +68,20 @@ public class IntegralActivity extends BaseActivity implements IntegralContract.V
         toolbar.setTitle("我的积分");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         integralPresenter.getMyIntegral();
+    }
+
+    @OnClick({R.id.ll_integral,R.id.ll_rank})
+    public void click(View view) {
+        switch (view.getId()) {
+            case R.id.ll_integral:
+                ToastUtils.showShort("我的积分");
+                break;
+            case R.id.ll_rank:
+                ToastUtils.showShort("积分排名");
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
@@ -114,12 +130,6 @@ public class IntegralActivity extends BaseActivity implements IntegralContract.V
 
         for (int i = 0; i < views.size(); i++) {
             final View view = views.get(i);
-//            view.postDelayed(new Runnable() {
-//                @Override
-//                public void run() {
-//                    view.animate().translationY(0).alpha(1).setDuration(500).start();
-//                }
-//            },100 + (i * 100));
             view.animate().translationY(0).alpha(1).setStartDelay(50 + (i * 100)).setDuration(500).setInterpolator(new AccelerateDecelerateInterpolator()).start();
         }
     }

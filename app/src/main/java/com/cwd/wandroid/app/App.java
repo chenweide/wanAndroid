@@ -13,6 +13,8 @@ import com.orhanobut.logger.BuildConfig;
 import com.orhanobut.logger.Logger;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
+import com.tencent.bugly.Bugly;
+import com.tencent.bugly.crashreport.CrashReport;
 
 public class App extends Application {
 
@@ -23,6 +25,7 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Bugly.init(getApplicationContext(), "4c1a47c021", true);
         mContext = this;
         registerActivityLifecycleCallbacks(lifecycleCallbacks);
         if (LeakCanary.isInAnalyzerProcess(this)) {
