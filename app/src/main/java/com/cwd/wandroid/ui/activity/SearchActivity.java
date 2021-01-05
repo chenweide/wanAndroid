@@ -234,6 +234,7 @@ public class SearchActivity extends BaseActivity implements ArticleContract.View
 
 
     private void initTab(FlowLayout flowLayout, final List<HotKey> tags) {
+        if (flowLayout == null) return;
         flowLayout.removeAllViews();
         LinearLayout.MarginLayoutParams layoutParams = new LinearLayout.MarginLayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         // 设置边距
@@ -266,5 +267,12 @@ public class SearchActivity extends BaseActivity implements ArticleContract.View
     @OnClick(R.id.iv_back)
     public void back(){
         finishAfterTransition();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        articlePresenter.detachView();
+        searchPresenter.detachView();
     }
 }
