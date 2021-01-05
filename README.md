@@ -1,5 +1,7 @@
 # Android 版 WanAndroid 客户端
 ## 一款浏览Android学习文章的App
+**项目地址(https://github.com/chenweide/wanAndroid)**
+
 **开源不易，如果喜欢的话希望给个 `Star` 或 `Fork` ^_^ ，谢谢~~**
 
 **该项目主要架构为Material Design+MVP+Retrofit2+Rxjava2，基于鸿洋大神提供的[玩Android](http://www.wanandroid.com/)的开放API构建而成**
@@ -41,8 +43,10 @@
 **v1.0.0 long long ago**
 
 ***
-Apk下载：[WanAndroid.apk](https://pan.baidu.com/s/1SGMtVlZvUW7ZqbAF6ssGNA)
+Apk下载：[WanAndroid.apk](https://pan.baidu.com/s/1vdLYVCBFq2SevOs6SCzb0g)  提取码: 5qk9
 ***
+
+**Gif可能需要科学上网才能正常浏览**
 ![image](https://github.com/chenweide/wanAndroid/blob/master/image/example.gif)
 <div align="center">
 <!--   <img src="http://thyrsi.com/t6/385/1539141394x-1404775437.jpg" width="30%" height="30%"/> -->
