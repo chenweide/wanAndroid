@@ -49,7 +49,7 @@ Apk下载：[WanAndroid.apk](https://pan.baidu.com/s/1vdLYVCBFq2SevOs6SCzb0g)  �
 **Gif可能需要科学上网才能正常浏览**
 ![image](https://github.com/chenweide/wanAndroid/blob/master/image/wandroid_example.gif)
 <div align="center">
-<img src="https://sm.ms/image/xpafDWUV7QTHnet" width="30%" height="30%"/>
+<img src="https://i.loli.net/2021/01/05/xpafDWUV7QTHnet.jpg" width="30%" height="30%"/>
 <!--   <img src="http://thyrsi.com/t6/385/1539141451x-1404775437.jpg" width="30%" height="30%"/>
 <!--   <img src="http://thyrsi.com/t6/385/1539175473x-1404755516.png" width="30%" height="30%"/> -->
 <!--   <img src="http://thyrsi.com/t6/385/1539141464x-1404775437.jpg" width="30%" height="30%"/> -->
@@ -58,5 +58,8 @@ Apk下载：[WanAndroid.apk](https://pan.baidu.com/s/1vdLYVCBFq2SevOs6SCzb0g)  �
 <!--   <img src="http://thyrsi.com/t6/385/1539141518x-1404775437.jpg" width="30%" height="30%"/> -->
 <!--   <img src="http://thyrsi.com/t6/385/1539141533x-1404775437.jpg" width="30%" height="30%"/> -->
 <!--   <img src="http://thyrsi.com/t6/385/1539141551x-1404775437.jpg" width="30%" height="30%"/> -->
+ 
+ 
+
  </div>
  
