@@ -43,7 +43,7 @@
 **v1.0.0 long long ago**
 
 ***
-Apk下载：[WanAndroid.apk](https://pan.baidu.com/s/1LkYz1Gtv3KDDE8suY4nZ4A)  提取码: cjfn
+Apk下载：[WanAndroid.apk](https://pan.baidu.com/s/1PqUS8aho4jMSS_oGeIGpnw)  提取码: 9x89
 ***
 
 **Gif可能需要科学上网才能正常浏览**
