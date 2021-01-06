@@ -69,12 +69,14 @@
 -dontshrink
 -dontoptimize
 
+-keep class android.app.**
 -keep class android.support.**
 -dontwarn android.support.**
 
 -dontwarn android.support.v4.**
+-dontwarn android.support.v7.**
 
--keep public class * extends android.app.BaseActivity
+-keep public class * extends com.cwd.wandroid.base.BaseActivity
 -keep public class * extends android.app.Application
 -keep public class * extends android.app.Service
 -keep public class * extends android.content.BroadcastReceiver
@@ -87,6 +89,10 @@
 -keep public class * extends android.support.v4.**
 -keep public class * extends android.app.Fragment
 -keep class com.cwd.wandroid.entity.**{*;}
+
+-keep class android.support.v7.** { *; }
+-keep interface android.support.v7.app.** { *; }
+-keep public class * extends android.support.v7.**
 
 -keepclassmembers class * implements java.io.Serializable {
     static final long serialVersionUID;

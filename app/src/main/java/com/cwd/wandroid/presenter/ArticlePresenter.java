@@ -167,7 +167,7 @@ public class ArticlePresenter extends BasePresenter<ArticleContract.View> implem
     @Override
     public void detachView() {
         super.detachView();
-        if(!disposable.isDisposed()){
+        if(disposable != null && !disposable.isDisposed()){
             disposable.dispose();
         }
     }

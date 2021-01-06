@@ -60,7 +60,7 @@ public class SystemPresenter extends BasePresenter<SystemContract.View> implemen
     @Override
     public void detachView() {
         super.detachView();
-        if(!disposable.isDisposed()){
+        if(disposable != null && !disposable.isDisposed()){
             disposable.dispose();
         }
     }

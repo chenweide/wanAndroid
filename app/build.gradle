@@ -6,8 +6,8 @@ android {
         applicationId "com.cwd.wandroid"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 1
-        versionName "1.1.1"
+        versionCode 3
+        versionName "1.1.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         ndk {

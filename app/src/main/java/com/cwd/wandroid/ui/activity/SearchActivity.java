@@ -272,7 +272,11 @@ public class SearchActivity extends BaseActivity implements ArticleContract.View
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        articlePresenter.detachView();
-        searchPresenter.detachView();
+        if (articlePresenter != null) {
+            articlePresenter.detachView();
+        }
+        if (searchPresenter != null) {
+            searchPresenter.detachView();
+        }
     }
 }

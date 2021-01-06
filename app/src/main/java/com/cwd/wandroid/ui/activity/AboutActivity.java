@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.cwd.wandroid.R;
 import com.cwd.wandroid.base.BaseActivity;
+import com.cwd.wandroid.utils.CommonUtils;
 
 import butterknife.BindView;
 
@@ -20,6 +21,8 @@ public class AboutActivity extends BaseActivity {
     Toolbar toolbar;
     @BindView(R.id.tv_desc)
     TextView tvDesc;
+    @BindView(R.id.tv_ver_name)
+    TextView tvVerName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,7 @@ public class AboutActivity extends BaseActivity {
             tvDesc.setText(Html.fromHtml(desc));
         }
         tvDesc.setMovementMethod(LinkMovementMethod.getInstance());
+        tvVerName.setText("v" + CommonUtils.getVerName(this));
     }
 
     @Override

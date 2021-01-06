@@ -194,7 +194,12 @@ public class ArticleFragment extends BaseFragment implements ArticleContract.Vie
     public void showTopArticleList(List<ArticleInfo> topArticleList) {
         articleInfoList.addAll(0,topArticleList);
         articleAdapter.notifyDataSetChanged();
-        ActivityCollector.getInstance().finishActivity(SplashActivity.class);
+        rvArticle.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ActivityCollector.getInstance().finishActivity(SplashActivity.class);
+            }
+        },500);
     }
 
     @Override

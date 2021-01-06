@@ -58,7 +58,7 @@ public class NavPresenter extends BasePresenter<NavContract.View> implements Nav
     @Override
     public void detachView() {
         super.detachView();
-        if(!disposable.isDisposed()){
+        if(disposable != null && !disposable.isDisposed()){
             disposable.dispose();
         }
     }

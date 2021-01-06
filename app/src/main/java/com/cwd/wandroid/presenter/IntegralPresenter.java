@@ -29,7 +29,7 @@ public class IntegralPresenter extends BasePresenter<IntegralContract.View> impl
     @Override
     public void detachView() {
         super.detachView();
-        if(!disposable.isDisposed()){
+        if(disposable != null && !disposable.isDisposed()){
             disposable.dispose();
         }
     }

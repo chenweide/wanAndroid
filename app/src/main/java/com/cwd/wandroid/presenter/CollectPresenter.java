@@ -131,7 +131,7 @@ public class CollectPresenter extends BasePresenter<CollectContract.View> implem
     @Override
     public void detachView() {
         super.detachView();
-        if(!disposable.isDisposed()){
+        if(disposable != null && !disposable.isDisposed()){
             disposable.dispose();
         }
     }
