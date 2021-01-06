@@ -43,7 +43,7 @@
 **v1.0.0 long long ago**
 
 ***
-Apk下载：[WanAndroid.apk](https://pan.baidu.com/s/11VU_F63fG5E8VrVJdIwpWw)  提取码: 3w64
+Apk下载：[WanAndroid.apk](https://pan.baidu.com/s/1Ej2QWkee_lVKg4IQrH9r8A)  提取码: a9d4
 ***
 
 **Gif可能需要科学上网才能正常浏览**
